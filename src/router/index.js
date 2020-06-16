@@ -3,12 +3,18 @@ import VueRouter from  'vue-router'
 import SignUp from '@/views/signUp.vue'
 import Login from '@/views/login.vue'
 import Dashboard from '@/views/Dashboard.vue'
+import Expenselist from '@/views/expenselist.vue'
 
 
 
 Vue.use(VueRouter);
 
 const routes = [
+  // {
+  //   path: "/",
+  //   name: "home",
+  //   component: Home
+  // },
   {
     path: "/signup",
     name: "signUp",
@@ -21,9 +27,15 @@ const routes = [
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
+    name: 'dashboard',
     component: Dashboard
+  },
+  {
+    path: '/expenselist',
+    name: 'expenselist',
+    component: Expenselist
   }
+
 ]
 
 const router = new VueRouter({
