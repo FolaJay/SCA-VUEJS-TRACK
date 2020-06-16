@@ -7,8 +7,11 @@
                 <div class="col-sm-10">
                     <div class="navbar-menu">
                         <router-link class="navbar-link"  to="/home">Home</router-link>
-                        <router-link class="navbar-link" to="/login">Login</router-link>
-                        <router-link class="navbar-link3 shadow" to="/signup">SignUp</router-link>
+
+                        <router-link class="navbar-link" to="/login" v-if="!user.loggedIn">Login</router-link>
+                        <router-link class="navbar-link" to="/" @click.native="logout" v-else>Logout</router-link>
+
+                        <router-link class="navbar-link3 shadow" to="/signup" v-if="!user.loggedIn">SignUp</router-link>
                     </div>
                 </div>
         </div>
@@ -16,7 +19,31 @@
 </template>
 <script>
 export default {
-    
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+        logout() {
+            this.$store.commit('SET_LOGGED_OUT');
+            this.$router.push('/login');
+        }
+    },
+    computed: {
+        user() {
+            console.log(this.$store.getters.user);
+            return this.$store.getters.user;
+        }
+    },
+    watch: {
+        user(value) {
+            if(value !== null) return value;
+        }
+    },
+    mounted() {
+        return this.$store.getters.user;
+    }
 }
 </script>
 <style scoped>

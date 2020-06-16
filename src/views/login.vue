@@ -39,12 +39,11 @@ export default {
         }
     },
     methods:{
-        logIn:function(){
-            firebase
-            .auth()
+        logIn: function(){
+            firebase.auth()
             .signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password)
             .then(() => {
-                this.$router.push({name: "Dashboard"});
+                this.$router.push({name: "dashboard"});
             }).catch(err => {
                 console.log(err)
                 this.error = err.message;

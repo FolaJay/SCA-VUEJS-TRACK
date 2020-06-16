@@ -11,15 +11,15 @@ const config ={
     projectId: "expense-app-f21c2",
     storageBucket: "expense-app-f21c2.appspot.com",
 }
-firebase.initializeApp(config)
+firebase.initializeApp(config);
 
 // firebase utils
-const db = firebase.firestore()
-const auth = firebase.auth()
-const user = auth.user
+const db = firebase.firestore();
+const auth = firebase.auth();
+const user = auth.user;
 
 firebase.auth().onAuthStateChanged(user => {
-    store.dispatch("fetchUser", user);
+    store.dispatch("login", user);
 });
 
 
