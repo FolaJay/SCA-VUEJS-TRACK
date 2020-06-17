@@ -6,21 +6,22 @@
                     <router-link class="navbar-link" to="#">Logo</router-link>
                     <h3>Hello</h3>
                 </div>
-
             </div>
         </div>
     </div>
 </template>
+
 <script>
-export default {
-    
-}
+    export default {
+        name: "sidebar"
+    }
 </script>
+
 <style scoped>
-.sidebar-menu{
-    border-right: 5px solid red;
-    background-color: blueviolet;
-    position: absolute; bottom: 10%;
-    height: 100vh;
-}
+    .sidebar-menu{
+        border-right: 5px solid red;
+        background-color: blueviolet;
+        position: absolute; bottom: 10%;
+        height: 100vh;
+    }
 </style>
