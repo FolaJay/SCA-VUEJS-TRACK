@@ -8,6 +8,7 @@
                     <div class="navbar-menu">
                         <router-link class="navbar-link"  to="/home">Home</router-link>
                         <router-link class="navbar-link" to="/login">Login</router-link>
+                        <router-link class="navbar-link" to="/expenlist">Expenses</router-link>
                         <router-link class="navbar-link3 shadow" to="/signup">SignUp</router-link>
                     </div>
                 </div>
