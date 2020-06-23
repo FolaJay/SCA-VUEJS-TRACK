@@ -1,39 +1,24 @@
 <template>
   <div>
-    <sidebar/>
-      <div>
-        <h2>Dashboard</h2>
-        <div>
-          <!-- <div v-if="user" class="alert alert-success" role="alert">You are logged in!</div> -->
-        </div>
-      </div>
-      </div>
+    <layout>
+      {{ message }}
+    </layout>
+  </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
-require('../firebaseConfig.js')
-import sidebar from '@/components/sidebar.vue'
-
-// import { user } from '../firebaseConfig';
+import layout  from '../components/layout'
 export default {
   name: 'dashboard',
+  data() {
+    return {
+      message: 'Dashboard'
+    }
+  },
   components: {
-    sidebar,
-    
+    layout
+  },
+  created() {
+
   }
 }
-  // data(){
-  //   return{
-  //     user:''
-  //   }
-  // },
-  // computed: {
-    // map `this.user` to `this.$store.getters.user`
-
-    // a helper that simply maps store getters to local computed properties.
-    // ...mapGetters({
-    //   user: "user"
-    // })
-//   }
-
-// }
+</script>

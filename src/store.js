@@ -6,29 +6,38 @@ import Vuex from "vuex";
 require('./firebaseConfig.js')   
 // import the firebaseConfig file.
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
+export const store = Vue.observable({
+    isSidebarOpen: false
+});
 export default new Vuex.Store({
     // Add the properties to the state object.
     state: {
         user: {
-            loggedIn:false, // tells us whether the user has been authenticated or not
-            data:null   // holds information about the logged-in user
+            loggedIn: false, // tells us whether the user has been authenticated or not
+            data: null   // holds information about the logged-in user
         }
     },
     getters: {
         user(state){
             return state.user
+        },
+        isLoggedIn(state) {
+            return state.user.loggedIn; // get logged in from user
         }
     },
-    // fetchUser action commits the SET_LOGGED_IN and SET_USER mutations defined
+    // login action commits the SET_LOGGED_IN and SET_USER mutations defined
     actions: {
-        fetchUser({ commit, user }) {
+        login({commit}, user) {
             commit("SET_LOGGED_IN", user !== null);
             if (user)  {
                 commit("SET_USER", {
-                    displayName: user.displayName,
-                    email:user.email
+                    data: {
+                        displayName: user.displayName,
+                        email:user.email
+                    },
+                    loggedIn: true
                 });
             }else {
                 commit("SET_USER", null)
@@ -42,11 +51,17 @@ export default new Vuex.Store({
         SET_LOGGED_IN(state, value) {
             state.user.loggedIn = value;
         },
+        SET_LOGGED_OUT(state) {
+            console.log(state)
+            state.user = { loggedIn: false, data: null};
+        },
         // makes changes to the data property on the state.user
         SET_USER(state, data) {
             state.user.data = data;
+        },
+        TOGGLE_SIDEBAR() {
+            store.isSidebarOpen = !store.isSidebarOpen
         }
-        
     }
 })
 

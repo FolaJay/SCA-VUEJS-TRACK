@@ -1,25 +1,20 @@
 <template>
   <div>
-    <navbar/>
-    <router-view/>
+      <router-view/>
   </div>
 </template>
 
 <script>
-import navbar from '@/components/navbar.vue'
 
 export default {
-  name: 'App',
-  components: {
-    navbar,
-    
-  }
+  name: 'App'
 }
 </script>
 <style>
 *{
-  font-size: 12px;
-  
+  font-size: 12px; 
+  overflow:hidden;
 }
+
 </style>
 

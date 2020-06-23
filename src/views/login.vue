@@ -5,11 +5,11 @@
             <form @submit.prevent="logIn">
                 <div class="input form-group" >
                     <label>EMAIL</label>
-                    <input class="form-control" type="email" v-model="loginForm.email" placeholder="Enter your Email" required>
+                    <input class="form-control" type="email" v-model="loginForm.email" placeholder="Enter your Email" required/>
                 </div>
                 <div class="input form-group">
                     <label>PASSWORD</label>
-                    <input class="form-control" type="password" v-model="loginForm.password" placeholder="Enter your password" required>
+                    <input class="form-control" type="password" v-model="loginForm.password" placeholder="Enter your password" required/>
                 </div>
                 <button type="button" class="btn shadow my-button" @click="logIn">Login</button>
                 <div>
@@ -39,9 +39,8 @@ export default {
         }
     },
     methods:{
-        logIn:function(){
-            firebase
-            .auth()
+        logIn: function(){
+            firebase.auth()
             .signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password)
             .then(() => {
                 this.$router.push({name: "dashboard"});

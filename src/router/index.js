@@ -4,6 +4,7 @@ import SignUp from '@/views/signUp.vue'
 import Login from '@/views/login.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Expenselist from '@/views/expenselist.vue'
+import newExpense from '@/views/createExpense.vue'
 
 
 
@@ -21,7 +22,7 @@ const routes = [
     component: SignUp
   },
   {
-    path: '/login',
+    path: '/',
     name: 'login',
     component: Login
   },
@@ -34,6 +35,11 @@ const routes = [
     path: '/expenselist',
     name: 'expenselist',
     component: Expenselist
+  },
+  {
+    path: '/createExpense',
+    name: 'newExpense',
+    component: newExpense
   }
 
 ]
