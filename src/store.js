@@ -17,7 +17,8 @@ export default new Vuex.Store({
         user: {
             loggedIn: false, // tells us whether the user has been authenticated or not
             data: null   // holds information about the logged-in user
-        }
+        },
+        show_modal: ''
     },
     getters: {
         user(state){
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         isLoggedIn(state) {
             return state.user.loggedIn; // get logged in from user
+        },
+        show_modal(state) {
+            return state.show_modal
         }
     },
     // login action commits the SET_LOGGED_IN and SET_USER mutations defined
@@ -61,6 +65,9 @@ export default new Vuex.Store({
         },
         TOGGLE_SIDEBAR() {
             store.isSidebarOpen = !store.isSidebarOpen
+        },
+        SET_SHOW_MODAL(state, payload) {
+            state.show_modal = payload
         }
     }
 })

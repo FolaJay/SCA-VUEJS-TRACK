@@ -54,7 +54,13 @@
               required
             />
           </div>
-          <button type="button" class="btn shadow my-button" @click="OnSaveExpense">Save</button>
+          <button
+                  type="button"
+                  class="btn shadow my-button"
+                  @click="OnSaveExpense"
+          >
+            Save <img src="../assets/5.gif"  alt="" v-if="loading">
+          </button>
         </form>
       </div>
     </layout>
@@ -74,11 +80,15 @@ export default {
       price: 0,
       quantity: 0,
       amountReceived: 0,
-      amountReturned: 0
+      amountReturned: 0,
+      loading: false
     };
   },
   methods: {
     OnSaveExpense: function() {
+      this.loading = !this.loading;
+      this.$store.commit('SET_SHOW_MODAL', '');
+
       expensesCollection.doc().set({
         item: this.item,
         price: this.price,
@@ -86,8 +96,16 @@ export default {
         amountReceived: this.amountReceived,
         amountReturned: this.amountReturned
         
+      }).then((error) => {
+        if(error) {
+          this.$store.commit('SET_SHOW_MODAL', 'show');
+        } else {
+          this.$store.commit('SET_SHOW_MODAL', 'show');
+        }
+        this.loading = !this.loading;
       });
-       alert("Items Purchased");
+
+
     }
   }
 };

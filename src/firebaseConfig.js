@@ -30,7 +30,7 @@ firebase.auth().onAuthStateChanged(user => {
 // db.settings(settings)
 
 // firebase collections
-const expensesCollection = db.collection('Expenses')
+const expensesCollection = db.collection('Expenses');
 // const postsCollection = db.collection('posts')
 // const commentsCollection = db.collection('comments')
 // const likesCollection = db.collection('likes')
