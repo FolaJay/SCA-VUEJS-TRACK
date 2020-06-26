@@ -78,16 +78,16 @@ export default {
     };
   },
   methods: {
-    OnSaveExpense: function() {
+    OnSaveExpense() {
       expensesCollection.doc().set({
         item: this.item,
         price: this.price,
         quantity: this.quantity,
         amountReceived: this.amountReceived,
         amountReturned: this.amountReturned
-        
       });
        alert("Items Purchased");
+       this.$router.push("/createExpense");
     }
   }
 };
