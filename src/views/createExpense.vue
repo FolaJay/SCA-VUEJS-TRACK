@@ -3,7 +3,7 @@
     <layout>
       <div class="expenseForm">
         <h2>Expenses</h2>
-        <form @submit.prevent="logIn" class>
+        <form>
           <div class="input form-group">
             <label>Item Purchased</label>
             <input
@@ -85,7 +85,9 @@ export default {
         quantity: this.quantity,
         amountReceived: this.amountReceived,
         amountReturned: this.amountReturned
+        
       });
+       alert("Items Purchased");
     }
   }
 };

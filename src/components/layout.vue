@@ -33,7 +33,6 @@ export default {
 </script>
 <style>
 .app-layout  {
-    
- 
+    padding-left: calc(200px - 100%);
 }
 </style>

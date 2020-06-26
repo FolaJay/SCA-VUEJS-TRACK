@@ -51,8 +51,6 @@ img {
   overflow-y: auto;
   background-color: #28334aff;
   position: fixed;
-  left: 0;
-  top: 0;
   height: 100vh;
   z-index: 999;
   padding: 3rem 20px 2rem 20px;

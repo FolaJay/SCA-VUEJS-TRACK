@@ -8,11 +8,14 @@
         <div v-if="isBurgerActive">
           <img @click="togglePanel" src="../assets/menu.png" />
         </div>
+        <div v-else>
+          <img @click="togglePanel" src="../assets/cancel.png" />
+        </div>
       </div>
       <div class="col-sm-9">
         <div class="navbar-menu">
           <router-link class="navbar-link" to="/home">Home</router-link>
-          <router-link class="navbar-link" to="#">Expenses</router-link>
+          <router-link class="navbar-link" to="/expenselist">Expenses</router-link>
           <router-link class="navbar-link" to="#">Contact Us</router-link>
           <router-link class="navbar-link" to="#">About Us</router-link>
 
@@ -46,6 +49,7 @@ export default {
     },
     togglePanel: function() {
       this.$emit("toggle");
+      this.isBurgerActive = !this.isBurgerActive
     }
   },
   computed: {
@@ -68,7 +72,6 @@ export default {
 .navbar-wrapper{
   background-color: #ffffff;
   margin-bottom: 3px;
-  padding-left: calc(200px - 100%);
 }
 .navbar-menu {
   float: right;
