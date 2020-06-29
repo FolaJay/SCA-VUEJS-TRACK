@@ -1,7 +1,14 @@
 <template>
   <div>
     <layout>
-      {{ message }}
+        <div class="container">
+          <h1>Welcome</h1>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"></div>
+          </div>
+        </div>
     </layout>
   </div>
 </template>

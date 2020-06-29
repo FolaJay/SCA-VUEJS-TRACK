@@ -36,7 +36,10 @@
           Already have an account
           <router-link to="/">Login</router-link>
         </p>
-        <button type="button" class="btn shadow my-button" @click="signUp">SignUp</button>
+        <button type="button" class="btn shadow my-button" @click="signUp">
+          SignUp
+          <img src="../assets/5.gif" alt v-if="loading" />
+        </button>
       </form>
     </div>
   </div>
@@ -52,16 +55,13 @@ export default {
       username: "",
       email: "",
       password: "",
-      error: null
+      error: null,
+      loading: false
     };
   },
   methods: {
-    signUp: function() {
-      console.log({
-        username: this.username,
-        email: this.email,
-        password: this.password
-      });
+    signUp() {
+      this.loading = !this.loading;
       // All future sign-in request now include tenant ID.
       firebase
         .auth()

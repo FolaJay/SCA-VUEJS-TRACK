@@ -20,7 +20,7 @@
           <router-link class="navbar-link" to="#">About Us</router-link>
 
           <router-link class="navbar-link" to="/login" v-if="!user.loggedIn">Login</router-link>
-          <router-link class="navbar-link" to="/" @click.native="logout" v-else>Logout</router-link>
+          <router-link class="navbar-link" to="/" @click="logout" v-else>Logout</router-link>
 
           <router-link class="navbar-link3 shadow" to="/signup" v-if="!user.loggedIn">SignUp</router-link>
         </div>
@@ -45,7 +45,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("SET_LOGGED_OUT");
-      this.$router.push("/login");
+      this.$router.push("/");
     },
     togglePanel: function() {
       this.$emit("toggle");
@@ -69,6 +69,9 @@ export default {
 };
 </script>
 <style scoped>
+.row{
+  margin-right: 0;
+}
 .navbar-wrapper{
   background-color: #ffffff;
   margin-bottom: 3px;

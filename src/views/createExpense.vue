@@ -137,4 +137,7 @@ export default {
   color: #4d4d4d;
   transition: 0.7s;
 }
+img{
+  padding-left:10px;
+}
 </style>

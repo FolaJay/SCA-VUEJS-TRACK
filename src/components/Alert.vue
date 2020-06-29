@@ -10,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                   <!-- Show message here-->
+                   {{message}}
                 </div>
                 <div class="modal-footer">
                     <button
@@ -40,7 +40,7 @@
             },
             message: {
                 type: String,
-                default: ''
+                default: 'Your Item(s) are purchased'
             }
         },
         data: () => ({

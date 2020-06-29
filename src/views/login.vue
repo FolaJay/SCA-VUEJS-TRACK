@@ -11,7 +11,9 @@
                     <label>PASSWORD</label>
                     <input class="form-control" type="password" v-model="loginForm.password" placeholder="Enter your password" required/>
                 </div>
-                <button type="button" class="btn shadow my-button" @click="logIn">Login</button>
+                <button type="button" class="btn shadow my-button" @click="logIn">
+                    Login <img src="../assets/5.gif"  alt="" v-if="loading">
+                </button>
                 <div>
                     <p>Forgot Password</p>
                     <p><router-link to='/signup'>Create an Account</router-link></p>
@@ -35,11 +37,13 @@ export default {
                 email:'',
                 password:''
             },
+            loading:false,
             error:null
         }
     },
     methods:{
-        logIn: function(){
+        logIn() {
+            this.loading = !this.loading
             firebase.auth()
             .signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password)
             .then(() => {

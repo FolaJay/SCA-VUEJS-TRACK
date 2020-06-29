@@ -1,32 +1,34 @@
 <template>
   <div>
     <layout>
-      <div>
-        <button class="newExpense" @click="createNewExpense">New Expense</button>
-      </div>
-      <div>
-        <table class="table table-hover">
-          <thead class="thead-light">
-            <tr>
-              <th>#</th>
-              <th scope="col">Item(s) Purchased</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Amount Collected</th>
-              <th scope="col">Amount Returned</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(expenseList,index) in expenseLists" :key="index">
-              <th scope="row">{{index}}</th>
-              <td>{{expenseList.item}}</td>
-              <td>{{expenseList.price}}</td>
-              <td>{{expenseList.quantity}}</td>
-              <td>{{expenseList.amountReceived}}</td>
-              <td>{{expenseList.amountReturned}}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="div-wrapper">
+        <div>
+          <button class="newExpense" @click="createNewExpense">New Expense</button>
+        </div>
+        <div>
+          <table class="table table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th>#</th>
+                <th scope="col">Item(s) Purchased</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Amount Collected</th>
+                <th scope="col">Amount Returned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(expenseList,index) in expenseLists" :key="index">
+                <th scope="row">{{index}}</th>
+                <td>{{expenseList.item}}</td>
+                <td>{{expenseList.price}}</td>
+                <td>{{expenseList.quantity}}</td>
+                <td>{{expenseList.amountReceived}}</td>
+                <td>{{expenseList.amountReturned}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </layout>
   </div>
@@ -63,12 +65,16 @@ export default {
       });
     }
   },
-  created() {
+  mounted() {
     this.getExpenses();
   }
 };
 </script>
 <style scoped>
+.div-wrapper{
+  margin:0 auto;
+  width: 60%;
+}
 .newExpense {
   background-color: rgb(53, 48, 48);
   border: 1px solid rgb(53, 48, 48);
