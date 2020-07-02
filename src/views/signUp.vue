@@ -46,7 +46,9 @@
 </template>
 
 <script>
+require("../firebaseConfig.js");
 import firebase from "firebase";
+import { customerCollection } from "../firebaseConfig";
 export default {
   name: "signUp",
 
@@ -61,29 +63,40 @@ export default {
   },
   methods: {
     signUp() {
-      this.loading = !this.loading;
       // All future sign-in request now include tenant ID.
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(data => {
-          alert("Your account has been created!");
-          data.user
-            .updateProfile({
-              displayName: this.username
+        .then((user) => {
+          // console.log(user.user.uid);
+          customerCollection
+            .doc(user.user.uid)
+            .set({
+              username: this.username,
             })
             .then(() => {
-              this.$router.push({ name: "login" });
+              console.log("Document successfully written");
+              console.log(user.user.uid)
+            })
+            .catch(err => {
+              this.error = err.message;
+              console.log(err);
+              console.log(err.message);
             });
+            alert("Your account has been created!");
+            this.$router.push({ name: "login" });
         })
         .catch(err => {
           this.error = err.message;
+          console.log(err);
+          console.log(err.message);
         });
       this.email = "";
       this.password = "";
       this.username = "";
     }
   }
+
 };
 </script>
 <style scoped>

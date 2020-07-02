@@ -20,7 +20,10 @@
           <router-link class="navbar-link" to="#">About Us</router-link>
 
           <router-link class="navbar-link" to="/login" v-if="!user.loggedIn">Login</router-link>
-          <router-link class="navbar-link" to="/" @click="logout" v-else>Logout</router-link>
+          <router-link class="navbar-link" to="/" @click="logout" v-else>
+          Logout
+          <img src="../assets/5.gif"  alt="" v-if="loading">
+          </router-link>
 
           <router-link class="navbar-link3 shadow" to="/signup" v-if="!user.loggedIn">SignUp</router-link>
         </div>
@@ -29,6 +32,8 @@
   </div>
 </template>
 <script>
+require('../firebaseConfig.js')
+import firebase from 'firebase'
 export default {
   props: {
     isOpen: {
@@ -38,14 +43,22 @@ export default {
   },
   data() {
     return {
-      isBurgerActive: true
+      isBurgerActive: true,
+      loading:false
     };
   },
   components: {},
   methods: {
     logout() {
-      this.$store.commit("SET_LOGGED_OUT");
-      this.$router.push("/");
+      // this.$store.commit("SET_LOGGED_OUT");
+      // this.$router.push("/");
+      this.loading = !this.loading
+      firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+      }).catch(function(error) {
+        // An error happened.
+        console.log(error)
+      });
     },
     togglePanel: function() {
       this.$emit("toggle");
