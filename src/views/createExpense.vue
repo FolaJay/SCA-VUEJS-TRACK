@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-import firebase from "firebase";
+// import firebase from "firebase";
 import { expensesCollection } from "../firebaseConfig";
 import layout from "../components/layout";
 
@@ -92,25 +92,20 @@ export default {
     OnSaveExpense: function() {
       this.loading = !this.loading;
       this.$store.commit('SET_SHOW_MODAL', '');
-      var user = firebase.auth().currentUser;
-      if (user) {
-          expensesCollection.doc().set({
-          item: this.item,
-          price: this.price,
-          quantity: this.quantity,
-          amountReceived: this.amountReceived,
-          amountReturned: this.amountReturned,  
-        }).then((error) => {
-          if(error) {
-            this.$store.commit('SET_SHOW_MODAL', 'show');
-          } else {
-            this.$store.commit('SET_SHOW_MODAL', 'show');
-          }
-          this.loading = !this.loading;
-        });
-      }else{
-        console.log("user is not logged in")
-      }
+        expensesCollection.doc().set({
+        item: this.item,
+        price: this.price,
+        quantity: this.quantity,
+        amountReceived: this.amountReceived,
+        amountReturned: this.amountReturned,  
+      }).then((error) => {
+        if(error) {
+          this.$store.commit('SET_SHOW_MODAL', 'show');
+        } else {
+          this.$store.commit('SET_SHOW_MODAL', 'show');
+        }
+        this.loading = !this.loading;
+      });
     }
   }
 };

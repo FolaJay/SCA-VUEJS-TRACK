@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-wrapper shadow ">
     <div class="row">
-      <div class="col-sm-2">
+      <div class="col-sm-1">
         <router-link class="navbar-link" to="#">Logo</router-link>
       </div>
       <div class="col-sm-1">
@@ -12,7 +12,7 @@
           <img @click="togglePanel" src="../assets/cancel.png" />
         </div>
       </div>
-      <div class="col-sm-9">
+      <div class="col-sm-10">
         <div class="navbar-menu">
           <router-link class="navbar-link" to="/home">Home</router-link>
           <router-link class="navbar-link" to="/expenselist">Expenses</router-link>

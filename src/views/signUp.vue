@@ -48,7 +48,6 @@
 <script>
 require("../firebaseConfig.js");
 import firebase from "firebase";
-import { customerCollection } from "../firebaseConfig";
 export default {
   name: "signUp",
 
@@ -63,34 +62,33 @@ export default {
   },
   methods: {
     signUp() {
-      // All future sign-in request now include tenant ID.
+      const vm   = this;
+      console.log(vm.username)
+      console.log(vm)
+      console.log(this)
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then((user) => {
-          // console.log(user.user.uid);
-          customerCollection
-            .doc(user.user.uid)
-            .set({
-              username: this.username,
+        .then(() => {
+          const user = firebase.auth().currentUser;
+          console.log(vm)
+          console.log(this)
+          user
+            .updateProfile({
+              displayName: vm.username 
             })
             .then(() => {
-              console.log("Document successfully written");
-              console.log(user.user.uid)
-            })
-            .catch(err => {
-              this.error = err.message;
-              console.log(err);
-              console.log(err.message);
+              console.log(user)
+              this.$router.push({ name: "login" });
             });
-            alert("Your account has been created!");
-            this.$router.push({ name: "login" });
         })
         .catch(err => {
           this.error = err.message;
           console.log(err);
           console.log(err.message);
         });
+            alert("Your account has been created!");
+            // this.$router.push({ name: "/" });
       this.email = "";
       this.password = "";
       this.username = "";
