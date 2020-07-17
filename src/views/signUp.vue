@@ -46,8 +46,7 @@
 </template>
 
 <script>
-require("../firebaseConfig.js");
-import firebase from "firebase";
+
 export default {
   name: "signUp",
 
@@ -56,45 +55,35 @@ export default {
       username: "",
       email: "",
       password: "",
-      error: null,
-      loading: false
+      error: null
     };
   },
   methods: {
-    signUp() {
-      const vm   = this;
-      console.log(vm.username)
-      console.log(vm)
-      console.log(this)
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          const user = firebase.auth().currentUser;
-          console.log(vm)
-          console.log(this)
-          user
-            .updateProfile({
-              displayName: vm.username 
-            })
-            .then(() => {
-              console.log(user)
-              this.$router.push({ name: "login" });
-            });
-        })
-        .catch(err => {
-          this.error = err.message;
-          console.log(err);
-          console.log(err.message);
-        });
-            alert("Your account has been created!");
-            // this.$router.push({ name: "/" });
+    async signUp() {
+
+      // sanity checks (functions to check form validity
+      await this.$store.dispatch('SIGN_UP', {
+        email: this.email,
+        username: this.username,
+        password: this.password
+      });
+      if (!this.$store.getters.error)
+        alert("Your account has been created!"); //you are showing message before you even test to see if the user is actually created
+    },
+    clearFields() {
       this.email = "";
       this.password = "";
       this.username = "";
     }
-  }
-
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loading
+    }
+  },
+  watch: {
+    loading: (val) => val
+  },
 };
 </script>
 <style scoped>

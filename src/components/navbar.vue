@@ -50,7 +50,7 @@ export default {
   components: {},
   methods: {
     logout() {
-      // this.$store.commit("SET_LOGGED_OUT");
+      // this.$actions.commit("SET_LOGGED_OUT");
       // this.$router.push("/");
       this.loading = !this.loading
       firebase.auth().signOut().then(function() {

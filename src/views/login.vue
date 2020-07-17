@@ -35,6 +35,23 @@
         </div>
       </form>
     </div>
+    <div class="form-div shadow">
+      <reusable-btn
+              title="Show Reusable"
+              color="bg-success"
+              @click.native="show_reusable = !show_reusable"
+      />
+
+      <reusable-btn
+              placeholder="My Text"
+              :is_text="true"
+              v-on:input="getText"
+      />
+
+      <div>
+        <reusable :data1="['foo', 'bar']" v-if="show_reusable" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,9 +59,15 @@
 <script>
 require("../firebaseConfig.js");
 import firebase from "firebase";
+import Reusable from "./Reusable";
+import ReusableButton from "./ReusableButton";
 
 export default {
   name: "login",
+  components: {
+    'reusable': Reusable,
+    'reusable-btn': ReusableButton
+  },
   data() {
     return {
       loginForm: {
@@ -52,6 +75,7 @@ export default {
         password: ""
       },
       loading: false,
+      show_reusable: false,
       error: null
     };
   },
@@ -65,22 +89,17 @@ export default {
           this.loginForm.password,
         )
         .then(() => {
-          
+          this.loading = !this.loading;
           this.$router.push({ name: "dashboard" });
         })
         .catch(err => {
           console.log(err);
           this.error = err.message;
         });
-        // var user = firebase.auth().currentUser;
-        // if (user) {
-        //     console.log(user.email)
-        //     // User is signed in.
-        // } else {
-        //     // No user is signed in.
-        // }
-        
     },
+    getText(val) {
+      console.log(val)
+    }
   }
 };
 </script>
