@@ -66,9 +66,9 @@ export default {
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
               console.log(user.uid);
-              
               console.log(doc.id, " => ", doc.data());
-              this.expenseLists.push(doc.data());    
+              this.expenseLists.push(doc.data());  
+
           });
         }).catch((error) => {
         console.log("Error getting documents: ", error);

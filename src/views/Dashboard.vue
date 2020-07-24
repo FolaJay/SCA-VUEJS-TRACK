@@ -9,7 +9,7 @@
               <div class="box shadow">
                 <div class="box-text">
                   <h2>Total Income</h2>
-                  
+                  <p>{{this.total}}</p>
                 </div>
               </div>
             </div>
@@ -81,12 +81,10 @@ export default {
           .get()
           .then(querySnapshot =>  {
               querySnapshot.forEach(doc => {
-                  
-                  const data = doc.data()
-                  this.total += data.income
-                  console.log(this.total)
-                  
+                const data = doc.data()
+                this.total  += parseInt(data.income)  
               });
+              console.log(this.total);
           })
           .catch((error) => {
           console.log("Error getting documents: ", error);
@@ -95,7 +93,8 @@ export default {
       });
     },
     totalIncome() {
-      
+      console.log(this.total);
+
       
     }
   },
@@ -127,7 +126,7 @@ export default {
 }
 .box-text p{
   padding-top:50px;
-  font-size: 30px;
+  font-size: 40px;
   color:#ffaf7b;
 }
 h1{

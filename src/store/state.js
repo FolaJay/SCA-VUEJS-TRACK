@@ -9,6 +9,6 @@ export default {
     loading:false,
     error: '',
     count:  0,
-    message: "hello"
+    message: "hello",
     
 }

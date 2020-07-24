@@ -1,39 +1,31 @@
 <template>
   <div>
-      <router-view/>
-      <alert v-if="showModal" :show="showModal"/>
+    <div>
+      
+    </div>
+    <router-view/>
   </div>
 </template>
 
-<script>
-
-    import Alert from "./components/alert";
-    export default {
-        name: 'App',
-        components: {
-            'alert': Alert,
-
-        },
-        data(){
-            return{
-                amount:50
-            }
-        },
-        computed: {
-            showModal() {
-                return this.$store.getters.show_modal
-            }
-        },
-        watch: {
-            showModal: val => val || ''
-        }
-    }
-</script>
 <style>
-*{
-  font-size: 12px; 
-  
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-</style>
+#nav {
+  padding: 30px;
+}
 
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>
