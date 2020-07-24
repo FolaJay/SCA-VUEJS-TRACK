@@ -1,5 +1,5 @@
 
-import firebase from 'firebase'
+import firebase, { database } from 'firebase'
 import 'firebase/firestore'
 import store from './store'
 
@@ -12,6 +12,17 @@ const config ={
     storageBucket: "expense-app-f21c2.appspot.com",
 }
 firebase.initializeApp(config);
+database = firebase.database();
+
+var ref = database.ref('income');
+ref.on('value', gotData, errData); 
+
+function gotData (data) {
+    console.log(data.val())
+}
+function errData (err) {
+    console.log(err)
+}
 
 // firebase utils
 const db = firebase.firestore();
