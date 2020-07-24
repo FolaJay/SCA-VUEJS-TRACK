@@ -40,7 +40,7 @@
             },
             message: {
                 type: String,
-                default: 'Your Item(s) are purchased'
+                default: 'Successful'
             }
         },
         data: () => ({

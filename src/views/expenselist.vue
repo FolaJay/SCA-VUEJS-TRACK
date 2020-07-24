@@ -5,6 +5,7 @@
         <div>
           <button class="newExpense" @click="createNewExpense">New Expense</button>
         </div>
+        <h2>List Of Expenses</h2>
         <div>
           <table class="table table-hover">
             <thead class="thead-light">
@@ -36,6 +37,7 @@
 <script>
 import { expensesCollection } from "../firebaseConfig";
 import layout from "../components/layout";
+import firebase from "firebase";
 export default {
   data() {
     return {
@@ -46,7 +48,7 @@ export default {
         price: 0,
         quantity: 0,
         amountReceived: 0,
-        amountReturned: 0
+        amountReturned: 0,
       }
     };
   },
@@ -58,9 +60,18 @@ export default {
       this.$router.push("/createExpense");
     },
     getExpenses() {
-      expensesCollection.get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          this.expenseLists.push(doc.data());
+      firebase.auth().onAuthStateChanged((user) => {
+        expensesCollection.where("customerId", "==", user.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+              console.log(user.uid);
+              
+              console.log(doc.id, " => ", doc.data());
+              this.expenseLists.push(doc.data());    
+          });
+        }).catch((error) => {
+        console.log("Error getting documents: ", error);
         });
       });
     }
@@ -71,8 +82,8 @@ export default {
 };
 </script>
 <style scoped>
-.div-wrapper{
-  margin:0 auto;
+.div-wrapper {
+  margin: 0 auto;
   width: 60%;
 }
 .newExpense {

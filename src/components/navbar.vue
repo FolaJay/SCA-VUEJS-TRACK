@@ -1,15 +1,12 @@
 <template>
   <div class="navbar-wrapper shadow ">
     <div class="row">
-      <div class="col-sm-1">
-        <router-link class="navbar-link" to="#">Logo</router-link>
-      </div>
-      <div class="col-sm-1">
+      <div class="col-sm-2">
         <div v-if="isBurgerActive">
-          <img @click="togglePanel" src="../assets/menu.png" />
+          <img class="burger" @click="togglePanel" src="../assets/menu.png" />
         </div>
         <div v-else>
-          <img @click="togglePanel" src="../assets/cancel.png" />
+          <img  class="burger" @click="togglePanel" src="../assets/cancel.png" />
         </div>
       </div>
       <div class="col-sm-10">
@@ -94,13 +91,14 @@ export default {
   padding: 25px 20px;
 }
 .navbar-link {
-  padding: 0 80px 0px 0px;
+  padding: 0 40px 0px 40px;
   color: #000;
-  font-size: 14px;
+  font-size: 16px;
+
   text-decoration: none;
 }
 .navbar-link:hover {
-  color: #808080;
+  color: #28334aff;
 }
 .navbar-link3 {
   background-color: #28334aff;
@@ -118,5 +116,6 @@ export default {
 }
 .burger {
   margin-top: 25px;
+  padding-left:60px;
 }
 </style>

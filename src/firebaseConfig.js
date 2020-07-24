@@ -18,8 +18,8 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const user = auth.user;
 
-firebase.auth().onAuthStateChanged(user => {
-    store.dispatch("login", user);
+firebase.auth().onAuthStateChanged(async user => {
+    await store.dispatch("login", user);
 });
 
 
@@ -31,7 +31,9 @@ firebase.auth().onAuthStateChanged(user => {
 
 // firebase collections
 const expensesCollection = db.collection('Expenses');
-const customerCollection = db.collection('Customers');
+const incomeCollection = db.collection('Income');
+
+
 // const commentsCollection = db.collection('comments')
 // const likesCollection = db.collection('likes')
 
@@ -40,8 +42,7 @@ export {
     auth,
     user,
     expensesCollection,
-    customerCollection
-    // postsCollection,
+    incomeCollection,
     // commentsCollection,
     // likesCollection
 }

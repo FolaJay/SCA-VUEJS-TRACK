@@ -3,6 +3,12 @@
     <div class="form-div shadow">
       <h4>SIGNUP</h4>
       <form class>
+        <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
+          </ul>
+        </p>
         <div class="input form-group">
           <label>USERNAME</label>
           <input class="form-control" v-model="username" placeholder="Enter your username" />
@@ -38,7 +44,7 @@
         </p>
         <button type="button" class="btn shadow my-button" @click="signUp">
           SignUp
-          <img src="../assets/5.gif" alt v-if="loading" />
+          <img src="../assets/5.gif" alt v-if="loadingSignUp" />
         </button>
       </form>
     </div>
@@ -47,7 +53,6 @@
 
 <script>
 require("../firebaseConfig.js");
-import firebase from "firebase";
 export default {
   name: "signUp",
 
@@ -56,43 +61,53 @@ export default {
       username: "",
       email: "",
       password: "",
+      customerId:"",
       error: null,
-      loading: false
+      errors:[],
+      loadingSignUp: false
     };
   },
   methods: {
-    signUp() {
-      const vm   = this;
-      console.log(vm.username)
-      console.log(vm)
-      console.log(this)
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          const user = firebase.auth().currentUser;
-          console.log(vm)
-          console.log(this)
-          user
-            .updateProfile({
-              displayName: vm.username 
-            })
-            .then(() => {
-              console.log(user)
-              this.$router.push({ name: "login" });
-            });
-        })
-        .catch(err => {
+    // sanity check function to help check form validity
+    async signUp() {
+      this.loadingSignUp = !this.loadingSignUp
+      await this.$store.dispatch('signUp', {
+        username : this.username,
+        email : this.email,
+        password :this.password
+      }).catch(err => {
           this.error = err.message;
-          console.log(err);
-          console.log(err.message);
+          if (this.email && this.password) {
+            return true;
+          }
+          if (!this.email && !this.password) {
+            this.errors.push(err.message);
+          }
+          // console.log(err);
+          // console.log(err.message);
         });
-            alert("Your account has been created!");
-            // this.$router.push({ name: "/" });
+      //  if (!this.$store.getters.error)  {
+      //   alert("Your account has been created!");
+      // this.$router.push({ name: "/" });
+      // }else{
+      //   this.error = this.$store.getters.error;
+      //   console.log(this.error)
+      // }
+      
+    }
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loading  
+    }
+  },
+  watch: {
+    loading: (val) => val
+  },
+  clearField() {
       this.email = "";
       this.password = "";
       this.username = "";
-    }
   }
 
 };
@@ -101,7 +116,7 @@ export default {
 .body {
   background-image: linear-gradient(to bottom right, #d76d77, #ffaf7b);
   padding-top: 100px;
-  height: 100vh;
+  min-height: 100vh;
 }
 .input {
   padding-bottom: 10px;

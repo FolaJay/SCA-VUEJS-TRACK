@@ -7,11 +7,17 @@
 
 <script>
 
-    import Alert from "./components/Alert";
+    import Alert from "./components/alert";
     export default {
         name: 'App',
         components: {
-            'alert': Alert
+            'alert': Alert,
+
+        },
+        data(){
+            return{
+                amount:50
+            }
         },
         computed: {
             showModal() {

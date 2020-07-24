@@ -3,6 +3,12 @@
     <div class="form-div shadow">
       <h4>LOGIN</h4>
       <form @submit.prevent="logIn">
+        <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
+          </ul>
+        </p>
         <div class="input form-group">
           <label>EMAIL</label>
           <input
@@ -52,11 +58,13 @@ export default {
         password: ""
       },
       loading: false,
-      error: null
+      error:null,
+      errors: []
     };
   },
   methods: {
     logIn() {
+      this.$store.commit('SET_SHOW_MODAL', '');
       this.loading = !this.loading;
       firebase
         .auth()
@@ -65,22 +73,22 @@ export default {
           this.loginForm.password,
         )
         .then(() => {
-          
-          this.$router.push({ name: "dashboard" });
+          if (this.$store.getters.isLoggedIn) {
+            this.$store.commit('SET_SHOW_MODAL', 'show');
+            this.$router.push({ name: "dashboard" });
+          } 
         })
         .catch(err => {
-          console.log(err);
           this.error = err.message;
+          if (this.email && this.password) {
+            return true;
+          }
+          if (!this.email && !this.password) {
+            this.errors.push(err.message);
+          }
+
         });
-        // var user = firebase.auth().currentUser;
-        // if (user) {
-        //     console.log(user.email)
-        //     // User is signed in.
-        // } else {
-        //     // No user is signed in.
-        // }
-        
-    },
+    }
   }
 };
 </script>
@@ -88,7 +96,7 @@ export default {
 .body {
   background-image: linear-gradient(to bottom right, #d76d77, #ffaf7b);
   padding-top: 100px;
-  height: 100vh;
+  min-height: 100vh;
 }
 .input {
   padding: 10px;

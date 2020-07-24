@@ -4,6 +4,12 @@
       <div class="expenseForm">
         <h2>Expenses</h2>
         <form>
+          <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
+          </ul>
+          </p>
           <div class="input form-group">
             <label>Item Purchased</label>
             <input
@@ -70,7 +76,7 @@
 // import firebase from "firebase";
 import { expensesCollection } from "../firebaseConfig";
 import layout from "../components/layout";
-
+import firebase from "firebase";
 export default {
   name: "expenselist",
   components: {
@@ -83,29 +89,36 @@ export default {
       quantity: 0,
       amountReceived: 0,
       amountReturned: 0,
-      customerId:'',
       loading: false,
+      error: null,
+      errors:[],
 
     };
   },
   methods: {
     OnSaveExpense: function() {
       this.loading = !this.loading;
-      this.$store.commit('SET_SHOW_MODAL', '');
-        expensesCollection.doc().set({
-        item: this.item,
-        price: this.price,
-        quantity: this.quantity,
-        amountReceived: this.amountReceived,
-        amountReturned: this.amountReturned,  
-      }).then((error) => {
-        if(error) {
-          this.$store.commit('SET_SHOW_MODAL', 'show');
-        } else {
-          this.$store.commit('SET_SHOW_MODAL', 'show');
-        }
-        this.loading = !this.loading;
-      });
+      if(this.item == "" || this.price == "" || this.amountReceived == "" || this.amountReturned == "") {
+            console.log("Field cannot be empty");
+            this.errors.push("Field cannot be empty");
+      } else{
+        firebase.auth().onAuthStateChanged((user) => {
+          expensesCollection.doc().set({
+          item: this.item,
+          price: this.price,
+          quantity: this.quantity,
+          amountReceived: this.amountReceived,
+          amountReturned: this.amountReturned,
+          customerId: user.uid 
+          }).then(() => {
+            this.$store.commit('SET_SHOW_MODAL', 'show');
+            this.loading = !this.loading;
+          }).catch(err => {
+            this.error = err.message;
+            this.errors.push(err.message);
+          })
+        })
+      }
     }
   }
 };
