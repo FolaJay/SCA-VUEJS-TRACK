@@ -11,52 +11,32 @@
           </ul>
           </p>
           <div class="input form-group">
-            <label>Item Purchased</label>
+            <label>Date</label>
             <input
               class="form-control"
               type="text"
-              v-model="item"
-              placeholder="Enter Item Purchased"
+              v-model="date"
+              placeholder="Date"
               required
             />
           </div>
           <div class="input form-group">
-            <label>Price</label>
+            <label>Expense</label>
             <input
               class="form-control"
               type="text"
-              v-model="price"
-              placeholder="Price of Item"
+              v-model="expense"
+              placeholder="Expense"
               required
             />
           </div>
           <div class="input form-group">
-            <label>Quantity Purchased</label>
+            <label>Amount</label>
             <input
               class="form-control"
               type="text"
-              v-model="quantity"
-              placeholder="Enter Quantity Purchased"
-              required
-            />
-          </div>
-          <div class="input form-group">
-            <label>Cash Received</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="amountReceived"
-              placeholder="Amount Received"
-              required
-            />
-          </div>
-          <div class="input form-group">
-            <label>Cash Returned</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="amountReturned"
-              placeholder="Amount Returned"
+              v-model="amount"
+              placeholder="Enter Amount Spent"
               required
             />
           </div>
@@ -84,11 +64,9 @@ export default {
   },
   data() {
     return {
-      item: "",
-      price: 0,
-      quantity: 0,
-      amountReceived: 0,
-      amountReturned: 0,
+      expense: "",
+      amount: 0,
+      date: 0,
       loading: false,
       error: null,
       errors:[],
@@ -98,17 +76,15 @@ export default {
   methods: {
     OnSaveExpense: function() {
       this.loading = !this.loading;
-      if(this.item == "" || this.price == "" || this.amountReceived == "" || this.amountReturned == "") {
+      if(this.expense == "" || this.amount == "" || this.date == "") {
             console.log("Field cannot be empty");
             this.errors.push("Field cannot be empty");
       } else{
         firebase.auth().onAuthStateChanged((user) => {
           expensesCollection.doc().set({
-          item: this.item,
-          price: this.price,
-          quantity: this.quantity,
-          amountReceived: this.amountReceived,
-          amountReturned: this.amountReturned,
+          expense: this.expense,
+          amount: this.amount,
+          date: this.date,
           customerId: user.uid 
           }).then(() => {
             this.$store.commit('SET_SHOW_MODAL', 'show');

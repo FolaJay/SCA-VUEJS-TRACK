@@ -5,27 +5,23 @@
         <div>
           <button class="newExpense" @click="createNewExpense">New Expense</button>
         </div>
-        <h2>List Of Expenses</h2>
+        <h2>Recent Expenses</h2>
         <div>
           <table class="table table-hover">
             <thead class="thead-light">
               <tr>
                 <th>#</th>
-                <th scope="col">Item(s) Purchased</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Amount Collected</th>
-                <th scope="col">Amount Returned</th>
+                <th scope="col">Date</th>
+                <th scope="col">Expenses</th>
+                <th scope="col">Amount</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(expenseList,index) in expenseLists" :key="index">
                 <th scope="row">{{index}}</th>
-                <td>{{expenseList.item}}</td>
-                <td>{{expenseList.price}}</td>
-                <td>{{expenseList.quantity}}</td>
-                <td>{{expenseList.amountReceived}}</td>
-                <td>{{expenseList.amountReturned}}</td>
+                <td>{{expenseList.date}}</td>
+                <td>{{expenseList.expense}}</td>
+                <td>{{expenseList.amount}}</td>
               </tr>
             </tbody>
           </table>
@@ -44,11 +40,9 @@ export default {
       expenseLists: [],
       totalExpense: 0,
       data: {
-        item: "",
-        price: 0,
-        quantity: 0,
-        amountReceived: 0,
-        amountReturned: 0,
+        date: 0,
+        expense: 0,
+        amount: 0,
       }
     };
   },
@@ -65,19 +59,22 @@ export default {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-              console.log(user.uid);
-              console.log(doc.id, " => ", doc.data());
               this.expenseLists.push(doc.data());  
-
           });
         }).catch((error) => {
         console.log("Error getting documents: ", error);
         });
       });
+    },
+    getTotalExpenses() {
+      //  console.log(this.expenseLists);
+      // this.totalExpenses += parseInt(this.expenseLists.amount) 
     }
   },
+
   mounted() {
     this.getExpenses();
+    
   }
 };
 </script>

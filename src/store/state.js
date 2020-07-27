@@ -9,6 +9,6 @@ export default {
     loading:false,
     error: '',
     count:  0,
+    totalExpense:  0,
     message: "hello",
-    
 }
