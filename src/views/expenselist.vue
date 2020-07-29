@@ -12,7 +12,7 @@
               <tr>
                 <th>#</th>
                 <th scope="col">Date</th>
-                <th scope="col">Expenses</th>
+                <th scope="col">Expense Category</th>
                 <th scope="col">Amount</th>
               </tr>
             </thead>
@@ -20,7 +20,7 @@
               <tr v-for="(expenseList,index) in expenseLists" :key="index">
                 <th scope="row">{{index}}</th>
                 <td>{{expenseList.date}}</td>
-                <td>{{expenseList.expense}}</td>
+                <td>{{expenseList.expenseCategory}}</td>
                 <td>{{expenseList.amount}}</td>
               </tr>
             </tbody>

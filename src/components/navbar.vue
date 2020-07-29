@@ -11,7 +11,6 @@
       </div>
       <div class="col-sm-10">
         <div class="navbar-menu">
-          <router-link class="navbar-link" to="/home">Home</router-link>
           <router-link class="navbar-link" to="/expenselist">Expenses</router-link>
           <router-link class="navbar-link" to="#">Contact Us</router-link>
           <router-link class="navbar-link" to="#">About Us</router-link>

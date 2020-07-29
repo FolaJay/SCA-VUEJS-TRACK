@@ -14,19 +14,19 @@
             <label>Date</label>
             <input
               class="form-control"
-              type="text"
+              type="date"
               v-model="date"
               placeholder="Date"
               required
             />
           </div>
           <div class="input form-group">
-            <label>Expense</label>
+            <label>Expense Category</label>
             <input
               class="form-control"
               type="text"
-              v-model="expense"
-              placeholder="Expense"
+              v-model="expenseCategory"
+              placeholder="Expense Category"
               required
             />
           </div>
@@ -64,7 +64,7 @@ export default {
   },
   data() {
     return {
-      expense: "",
+      expenseCategory: "",
       amount: 0,
       date: 0,
       loading: false,
@@ -76,13 +76,13 @@ export default {
   methods: {
     OnSaveExpense: function() {
       this.loading = !this.loading;
-      if(this.expense == "" || this.amount == "" || this.date == "") {
+      if(this.expenseCategory == "" || this.amount == "" || this.date == "") {
             console.log("Field cannot be empty");
             this.errors.push("Field cannot be empty");
       } else{
         firebase.auth().onAuthStateChanged((user) => {
           expensesCollection.doc().set({
-          expense: this.expense,
+          expenseCategory: this.expenseCategory,
           amount: this.amount,
           date: this.date,
           customerId: user.uid 

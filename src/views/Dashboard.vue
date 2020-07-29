@@ -5,27 +5,38 @@
       <div class="inner-wrapper">
           <h1>Welcome</h1>
           <div class="row">
-            <div class="col-sm-4" >
-              <div class="box shadow" style="background-color:#D2B4DE">
-                <div class="box-text">
-                  <h2>Total Income</h2>
-                  <p>{{this.total}}</p>
+            <div  class="col-6">
+              <div style="background-color:#ffffff">
+                <div>
+                  <img class="image" src="../assets/image1.png"/>
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
-              <div class="box shadow" style="background-color:#2E86C1">
-                <div class="box-text">
-                  <h2>Total Expenses</h2>
-                  <p>{{this.totalExpense}}</p>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-sm-4" >
+                  <div class="shadow" >
+                    <div class="box-text">
+                      <h2>Total Income</h2>
+                      <p>{{this.total}}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="box shadow" style="background-color:#F5B041">
-                <div class="box-text" >
-                  <h2>Available Balance</h2>
-                  <p>{{this.total}} - {{this.totalExpense }}</p>
+                <div class="col-sm-4">
+                  <div class="shadow" >
+                    <div class="box-text">
+                      <h2>Total Expenses</h2>
+                      <p>{{this.totalExpense}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="shadow">
+                    <div class="box-text" >
+                      <h2>Available Balance</h2>
+                      <p>{{this.balance}}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -91,22 +102,18 @@ export default {
           });
           var i;
           var vm = this;
-          for (i = 0; i < this.expenseLists.length; i++) {
-            vm.totalExpense += parseInt(this.expenseLists[i].amount)  
+          for (i = 0; i < vm.expenseLists.length; i++) {
+            vm.totalExpense += parseInt(vm.expenseLists[i].amount) 
+            return vm.balance = parseInt(vm.total) - parseInt(vm.totalExpense) 
           }
         }).catch((error) => {
         console.log("Error getting documents: ", error);
         });
       });
     },
-    availableBalance() {
-      console.log(this.total);
-      this.balance = parseInt(this.total - this.totalExpense )
-    }
   },
-  mounted () {
+created () {
     this.getIncome();
-    this.availableBalance();
     this.getExpenses();
     
   }
@@ -121,22 +128,31 @@ export default {
   margin:0 auto;
   width:80%; 
 }
-.box{
-  background-color: #ffffff;
-  height: 250px;
-  border-radius: 5%;
-}
 .box-text{
   text-align: center;
-  margin-top:50px;
-  padding-top:50px;
+  margin-top:170px;
+  text-align: center;
+  padding-top:30px;
+   border-radius: 5%;
+  height: 150px;
+  border:1px solid #006699;
+  transition: 0.5s;
+
 }
 .box-text p{
-  padding-top:50px;
-  font-size: 40px;
-  color:#000;
+  padding-top:10px;
+  font-size: 25px;
+  color:#006699;
+  font-weight: 400;
 }
 h1{
-  padding-top:30px;
+  padding-top:10px;
+}
+h2{
+  color:#006699;
+}
+.image{
+  width: 500px;
+  height: 500px;
 }
 </style>
