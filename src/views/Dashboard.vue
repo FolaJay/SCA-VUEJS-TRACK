@@ -18,7 +18,7 @@
                   <div class="shadow" >
                     <div class="box-text">
                       <h2>Total Income</h2>
-                      <p>{{this.total}}</p>
+                      <p>${{this.total}}</p>
                     </div>
                   </div>
                 </div>
@@ -26,7 +26,7 @@
                   <div class="shadow" >
                     <div class="box-text">
                       <h2>Total Expenses</h2>
-                      <p>{{this.totalExpense}}</p>
+                      <p>${{this.totalExpense}}</p>
                     </div>
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                   <div class="shadow">
                     <div class="box-text" >
                       <h2>Available Balance</h2>
-                      <p>{{this.balance}}</p>
+                      <p>${{this.balance}}</p>
                     </div>
                   </div>
                 </div>
