@@ -132,7 +132,7 @@ div p {
 .form-div {
   background-color: #ffffff;
   width: 400px;
-  height: 400px;
+  height: 100%;
   padding: 25px 35px;
   margin: 0 auto;
   border-radius: 5px;

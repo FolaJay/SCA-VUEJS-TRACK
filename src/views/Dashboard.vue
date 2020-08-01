@@ -33,12 +33,34 @@
                 <div class="col-sm-4">
                   <div class="shadow">
                     <div class="box-text" >
-                      <h2>Available Balance</h2>
+                      <h2> Balance</h2>
                       <p>${{this.balance}}</p>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-6"> 
+              <table class="table table-hover table-borderless">
+              <thead class="table-primary">
+                <tr>
+                  <th>S/N</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Expense Category</th>
+                  <th scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(expenseList,index) in expenseLists" :key="index">
+                  <th scope="row">{{index}}</th>
+                  <td>{{expenseList.date}}</td>
+                  <td>{{expenseList.expenseCategory}}</td>
+                  <td>{{expenseList.amount}}</td>
+                </tr>
+              </tbody>
+              </table>
             </div>
           </div>
       </div>
@@ -112,7 +134,7 @@ export default {
       });
     },
   },
-created () {
+mounted () {
     this.getIncome();
     this.getExpenses();
     
@@ -154,5 +176,8 @@ h2{
 .image{
   width: 500px;
   height: 500px;
+}
+.table-content{
+
 }
 </style>

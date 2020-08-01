@@ -11,6 +11,16 @@
           </ul>
           </p>
           <div class="input form-group">
+            <label>Date</label>
+            <input
+              class="form-control"
+              type="date"
+              v-model="date"
+              placeholder="Date"
+              required
+            />
+          </div>
+          <div class="input form-group">
             <div class="input form-group">
                 <label>Income</label>
                 <input
@@ -45,6 +55,8 @@ export default {
   },
   data() {
     return {
+      
+      date: 0,
       income: "",
       loading: false,
       error: null,
@@ -58,6 +70,7 @@ export default {
       this.loading = !this.loading;
         firebase.auth().onAuthStateChanged((user) => {
           incomeCollection.doc().set({
+          date: this.date,
           income: this.income,
           customerId: user.uid 
           }).then(() => {

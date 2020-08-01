@@ -6,11 +6,12 @@
           <button class="newExpense" @click="createNewExpense">New Expense</button>
         </div>
         <h2>Recent Expenses</h2>
+        <img src="../assets/5.gif" alt v-if="loading" />
         <div>
           <table class="table table-hover">
-            <thead class="thead-light">
+            <thead class="table-header">
               <tr>
-                <th>#</th>
+                <th>S/N</th>
                 <th scope="col">Date</th>
                 <th scope="col">Expense Category</th>
                 <th scope="col">Amount</th>
@@ -39,6 +40,7 @@ export default {
     return {
       expenseLists: [],
       totalExpense: 0,
+      loading: false,
       data: {
         date: 0,
         expense: 0,
@@ -65,16 +67,17 @@ export default {
         console.log("Error getting documents: ", error);
         });
       });
-    },
-    getTotalExpenses() {
-      //  console.log(this.expenseLists);
-      // this.totalExpenses += parseInt(this.expenseLists.amount) 
     }
   },
-
   mounted() {
     this.getExpenses();
-    
+  },
+  created(){
+    if(!this.loading) {
+        this.loading = !this.loading;
+      }else{
+        this.loading = false
+      }
   }
 };
 </script>
@@ -99,5 +102,16 @@ export default {
   border: 2px solid #ffaf7b;
   color: #4d4d4d;
   transition: 0.7s;
+}
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 20px;
+}
+table-header{
+  background:#006699 !important ;
 }
 </style>

@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
     import Alert from "./components/Alert";
     export default {
         name: 'App',
@@ -26,7 +25,7 @@
 <style>
 *{
   font-size: 12px; 
-  
+  font-family: 'helvetica neue', helvetica, arial, sans-serif;
 }
 
 </style>
