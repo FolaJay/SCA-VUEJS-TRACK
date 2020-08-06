@@ -78,7 +78,8 @@ export default {
       this.loading = !this.loading;
       if(this.expenseCategory == "" || this.amount == "" || this.date == "") {
             console.log("Field cannot be empty");
-            this.errors.push("Field cannot be empty");
+            this.errors.push("Field cannot be empty")
+            this.loading = !this.loading;
       } else{
         firebase.auth().onAuthStateChanged((user) => {
           expensesCollection.doc().set({
@@ -92,6 +93,7 @@ export default {
           }).catch(err => {
             this.error = err.message;
             this.errors.push(err.message);
+            
           })
         })
       }

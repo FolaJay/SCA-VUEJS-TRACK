@@ -15,7 +15,17 @@ export default {
     show_modal(state) {
         return state.show_modal
     },
-    sumExpense(state) {
-        return state.count
+    totalIncome(state) {
+        return state.income
+    },
+    Expenses(state) {
+        return state.expense
+    },
+    balance(state) {
+        return state.balance
+    },
+    expenselist(state) {
+        return state.expenselists 
     }
+    
 }

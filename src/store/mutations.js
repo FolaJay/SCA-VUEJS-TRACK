@@ -32,6 +32,17 @@ export default {
     },
     SUM_EXPENSE(state, payload) {
         state.count += payload;
-    }
-
+    },
+    TOTAL_INCOME(state, payload) {
+        state.income = payload
+    },
+    TOTAL_EXPENSE(state, payload) {
+        state.expense = payload
+    },
+    BALANCE(state, payload) {
+        state.balance = payload
+    },
+    EXPENSELIST(state, payload) {
+        state.expenselists.push(payload)
+    },
 }

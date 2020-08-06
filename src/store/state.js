@@ -11,4 +11,8 @@ export default {
     count:  0,
     totalExpense:  0,
     message: "hello",
+    income:0,
+    expense:0,
+    balance:0,
+    expenselists:[]
 }

@@ -18,7 +18,7 @@
                   <div class="shadow" >
                     <div class="box-text">
                       <h2>Total Income</h2>
-                      <p>${{this.total}}</p>
+                      <p>${{this.totalIncome}}</p>
                     </div>
                   </div>
                 </div>
@@ -26,7 +26,7 @@
                   <div class="shadow" >
                     <div class="box-text">
                       <h2>Total Expenses</h2>
-                      <p>${{this.totalExpense}}</p>
+                      <p>${{this.Expenses}}</p>
                     </div>
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                   <div class="shadow">
                     <div class="box-text" >
                       <h2> Balance</h2>
-                      <p>${{this.balance}}</p>
+                      <p>${{this.Balance}}</p>
                     </div>
                   </div>
                 </div>
@@ -52,7 +52,7 @@
                   <th scope="col">Amount</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="table-content">
                 <tr v-for="(expenseList,index) in expenseLists" :key="index">
                   <th scope="row">{{index}}</th>
                   <td>{{expenseList.date}}</td>
@@ -69,10 +69,7 @@
   </div>
 </template>
 <script>
-import { incomeCollection } from "../firebaseConfig";
-import { expensesCollection } from "../firebaseConfig";
 import layout from "../components/layout";
-import firebase from "firebase";
 require("../firebaseConfig.js");
 // import firebase from "firebase";
 export default {
@@ -81,8 +78,6 @@ export default {
   data() {
     return {
       message: 'Dashboard',
-      Profile:'',
-      username: null,
       amount: 0,
       count:0,
       income:0,
@@ -98,48 +93,34 @@ export default {
   },
   methods: {  
     getIncome() {
-      firebase.auth().onAuthStateChanged((user) => {
-        incomeCollection.where("customerId", "==", user.uid)
-          .get()
-          .then(querySnapshot =>  {
-              querySnapshot.forEach(doc => {
-                const data = doc.data()
-                this.total  += parseInt(data.income)  
-              });
-              // console.log(this.total);
-          })
-          .catch((error) => {
-          console.log("Error getting documents: ", error);
-        });
-        
-      });
-    },
+      this.$store.dispatch('getIncome')
+    }, 
     getExpenses() {
-      firebase.auth().onAuthStateChanged((user) => {
-        expensesCollection.where("customerId", "==", user.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              this.expenseLists.push(doc.data());  
-          });
-          var i;
-          var vm = this;
-          for (i = 0; i < vm.expenseLists.length; i++) {
-            vm.totalExpense += parseInt(vm.expenseLists[i].amount) 
-            return vm.balance = parseInt(vm.total) - parseInt(vm.totalExpense) 
-          }
-        }).catch((error) => {
-        console.log("Error getting documents: ", error);
-        });
-      });
-    },
+      this.$store.dispatch('getExpenses');
+    }
   },
-mounted () {
+created () {
     this.getIncome();
     this.getExpenses();
-    
+  },
+  computed: {
+    totalIncome() {
+      return this.$store.getters.totalIncome;
+    },
+    Expenses() {
+      return this.$store.getters.Expenses;
+    },
+    Balance() {
+      return this.$store.getters.balance;
+    }
+  },
+  watch: {
+      totalIncome: (val) => val,
+      Expenses: (val) => val,
+      Balance: (val) => val,
   }
 }
+
 </script>
 <style scoped>
 .wrapper{

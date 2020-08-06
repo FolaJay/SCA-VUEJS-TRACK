@@ -6,7 +6,7 @@
           <button class="newExpense" @click="createNewExpense">New Expense</button>
         </div>
         <h2>Recent Expenses</h2>
-        <img src="../assets/5.gif" alt v-if="loading" />
+        <img src="../assets/5.gif" alt v-if="!loading" />
         <div>
           <table class="table table-hover">
             <thead class="table-header">
@@ -23,6 +23,7 @@
                 <td>{{expenseList.date}}</td>
                 <td>{{expenseList.expenseCategory}}</td>
                 <td>{{expenseList.amount}}</td>
+                <td>{{this.expenseLists}}</td>
               </tr>
             </tbody>
           </table>
@@ -32,15 +33,12 @@
   </div>
 </template>
 <script>
-import { expensesCollection } from "../firebaseConfig";
 import layout from "../components/layout";
-import firebase from "firebase";
 export default {
   data() {
     return {
-      expenseLists: [],
+      expenseLists:[],
       totalExpense: 0,
-      loading: false,
       data: {
         date: 0,
         expense: 0,
@@ -55,29 +53,30 @@ export default {
     createNewExpense: function() {
       this.$router.push("/createExpense");
     },
-    getExpenses() {
-      firebase.auth().onAuthStateChanged((user) => {
-        expensesCollection.where("customerId", "==", user.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              this.expenseLists.push(doc.data());  
-          });
-        }).catch((error) => {
-        console.log("Error getting documents: ", error);
-        });
-      });
+    // getExpenses() {
+      
+    // },
+    async getExpenseList() {
+     this.$store.getters.expenseList
+      await this.$store.dispatch('getExpenseList') 
+      console.log(this.expenseList)
     }
   },
   mounted() {
-    this.getExpenses();
+    this.getExpenseList();
   },
-  created(){
-    if(!this.loading) {
-        this.loading = !this.loading;
-      }else{
-        this.loading = false
-      }
+ computed: {
+    loading() {
+      return !this.$store.getters.loading;
+    },
+    expenseList() {
+      
+      return this.$store.getters.expenseList;
+    }
+  },
+  watch: {
+    loading: (val) => !val,
+    expenseList: (val) => !val,
   }
 };
 </script>
