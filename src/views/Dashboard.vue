@@ -12,6 +12,7 @@
                 </div>
               </div>
             </div>
+            <img src="../assets/5.gif" alt v-if="!loading" />
             <div class="col-6">
               <div class="row">
                 <div class="col-sm-4" >
@@ -34,7 +35,7 @@
                   <div class="shadow">
                     <div class="box-text" >
                       <h2> Balance</h2>
-                      <p>${{this.Balance}}</p>
+                      <p>${{this.totalIncome - this.Expenses}}</p>
                     </div>
                   </div>
                 </div>
@@ -83,7 +84,6 @@ export default {
       income:0,
       total:0,
       totalExpense:0,
-      expenseLists: [],
       balance:0
       
     }
@@ -97,9 +97,13 @@ export default {
     }, 
     getExpenses() {
       this.$store.dispatch('getExpenses');
+    },
+    getExpenseList() {
+      console.log(this.expenseLists)
+      this.$store.dispatch('getExpenseList')
     }
   },
-created () {
+mounted () {
     this.getIncome();
     this.getExpenses();
   },
@@ -110,14 +114,18 @@ created () {
     Expenses() {
       return this.$store.getters.Expenses;
     },
-    Balance() {
-      return this.$store.getters.balance;
-    }
+    expenseLists() {
+      return this.$store.getters.expenselist;
+    },
+    loading() {
+      return this.$store.getters.loading;
+    },
   },
   watch: {
-      totalIncome: (val) => val,
-      Expenses: (val) => val,
-      Balance: (val) => val,
+    totalIncome: (val) => val,
+    Expenses: (val) => val,
+    expenseLists: (val) => val,
+    loading: (val) => val,
   }
 }
 

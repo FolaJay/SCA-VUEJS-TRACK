@@ -2,40 +2,48 @@
   <div>
     <layout>
       <div class="wrapper">
-        <h2>Monthly Income</h2>
+        <h2>Monthly Budget</h2>
         <form>
-          <p v-if="errors.length">
-          <b>Please correct the following error(s):</b>
-          <ul>
-            <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
-          </ul>
-          </p>
-          <div class="input form-group">
-            <label>Date</label>
-            <input
-              class="form-control"
-              type="date"
-              v-model="date"
-              placeholder="Date"
-              required
-            />
-          </div>
-          <div class="input form-group">
+            <p v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                    <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
+                </ul>
+            </p>
             <div class="input form-group">
-                <label>Income</label>
+                <label>Date</label>
                 <input
                 class="form-control"
-                type="text"
-                v-model="income"
-                placeholder="Income"
+                type="date"
+                v-model="date"
+                placeholder="Date"
                 required
                 />
             </div>
-          </div>
+            <div class="input form-group">
+                <label>Budget Category</label>
+                <input
+                class="form-control"
+                type="text"
+                v-model="budgetCategory"
+                placeholder="Budget Category"
+                required
+                />
+            </div>
+            <div class="input form-group">
+                <label>Amount</label>
+                <input
+                class="form-control"
+                type="text"
+                v-model="amount"
+                placeholder="Amount"
+                required
+                />
+            </div>
           <button
                   type="button"
                   class="btn shadow my-button"
-                  @click="OnSaveIncome"
+                  @click="OnSaveBudget"
           >
             Save <img src="../assets/5.gif"  alt="" v-if="loading">
           </button>
@@ -45,31 +53,34 @@
   </div>
 </template>
 <script>
-import { incomeCollection } from "../firebaseConfig";
+// import { incomeCollection } from "../firebaseConfig";
+import { budgetCollection } from "../firebaseConfig";
 import layout from "../components/layout";
 import firebase from "firebase";
 export default {
-  name: "income",
+  name: "budget",
   components: {
     layout
   },
   data() {
     return {
       date: 0,
-      income: "",
+      budgetCategory: "",
+      amount:0,
       loading: false,
       error: null,
-      errors:[],
+      errors:[]
 
     };
   },
   methods: {
-    OnSaveIncome: function() {
+    OnSaveBudget: function() {
       this.loading = !this.loading;
         firebase.auth().onAuthStateChanged((user) => {
-          incomeCollection.doc().set({
+          budgetCollection.doc().set({
           date: this.date,
-          income: this.income,
+          budgetCategory: this.budgetCategory,
+          amount: this.amount,
           customerId: user.uid 
           }).then(() => {
             this.$store.commit('SET_SHOW_MODAL', 'show');
@@ -78,6 +89,7 @@ export default {
             this.error = err.message;
             this.errors.push(err.message);
           });
+          
         })
     }
   }

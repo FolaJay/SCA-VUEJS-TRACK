@@ -37,12 +37,15 @@ export default {
         state.income = payload
     },
     TOTAL_EXPENSE(state, payload) {
-        state.expense = payload
+        state.totalexpense = payload
     },
-    BALANCE(state, payload) {
-        state.balance = payload
+    EXPENSELIST(state, value) {
+        state.expenselists = value
     },
-    EXPENSELIST(state, payload) {
-        state.expenselists.push(payload)
+    BUDGETLIST(state, value) {
+        state.budgetlists = value
+    },
+    TOTAL_BUDGET(state, payload) {
+        state.totalBudget = payload
     },
 }

@@ -12,8 +12,8 @@
       <div class="col-sm-10">
         <div class="navbar-menu">
           <router-link class="navbar-link" to="/expenselist">Expenses</router-link>
-          <router-link class="navbar-link" to="#">Contact Us</router-link>
-          <router-link class="navbar-link" to="#">About Us</router-link>
+          <router-link class="navbar-link" to="/budget">Budget</router-link>
+          <router-link class="navbar-link" to="/savings">Savings</router-link>
 
           <router-link class="navbar-link" to="/login" v-if="!user.loggedIn">Login</router-link>
           <router-link class="navbar-link" to="/" @click="logout" v-else>

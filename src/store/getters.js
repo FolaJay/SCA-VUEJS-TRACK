@@ -21,11 +21,11 @@ export default {
     Expenses(state) {
         return state.expense
     },
-    balance(state) {
-        return state.balance
-    },
     expenselist(state) {
         return state.expenselists 
-    }
+    },
+    budgetlist(state) {
+        return state.budgetlists 
+    },
     
 }

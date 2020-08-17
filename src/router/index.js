@@ -6,6 +6,10 @@ import dashboard from '@/views/dashboard.vue'
 import Expenselist from '@/views/expenselist.vue'
 import newExpense from '@/views/createExpense.vue'
 import Income from '@/views/income.vue'
+import budget from '@/views/budget.vue'
+import newBudget from '@/views/createBudget.vue'
+import savings from '@/views/createSavings.vue'
+
 
 
 
@@ -46,7 +50,22 @@ const routes = [
     path: '/income',
     name: 'income',
     component: Income
-  }
+  },
+  {
+    path: '/budget',
+    name: 'budget',
+    component: budget
+  },
+  {
+    path: '/createBudget',
+    name: 'newBudget',
+    component: newBudget
+  },
+  {
+    path: '/createSavings',
+    name: 'savings',
+    component: savings
+  },
 
 ]
 
