@@ -82,6 +82,7 @@ export default {
       amount: 0,
       count:0,
       income:0,
+      expense:0,
       total:0,
       totalExpense:0,
       balance:0
@@ -93,6 +94,7 @@ export default {
   },
   methods: {  
     getIncome() {
+      console.log(this.Expenses);
       this.$store.dispatch('getIncome')
     }, 
     getExpenses() {

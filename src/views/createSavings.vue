@@ -22,11 +22,11 @@
           </div>
           <div class="input form-group">
             <div class="input form-group">
-                <label>Income</label>
+                <label>Set Saving Limit for the month</label>
                 <input
                 class="form-control"
                 type="text"
-                v-model="income"
+                v-model="savingLimit"
                 placeholder="Income"
                 required
                 />

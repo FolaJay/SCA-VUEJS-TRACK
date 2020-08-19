@@ -37,7 +37,7 @@ export default {
         state.income = payload
     },
     TOTAL_EXPENSE(state, payload) {
-        state.totalexpense = payload
+        state.expense = payload
     },
     EXPENSELIST(state, value) {
         state.expenselists = value
