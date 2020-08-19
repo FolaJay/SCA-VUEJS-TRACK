@@ -69,7 +69,7 @@ export default {
       amount:0,
       loading: false,
       error: null,
-      errors:[]
+      errors:[],
 
     };
   },

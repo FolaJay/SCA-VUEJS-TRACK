@@ -27,7 +27,7 @@
                 class="form-control"
                 type="text"
                 v-model="savingLimit"
-                placeholder="Income"
+                placeholder="Saving Limit"
                 required
                 />
             </div>
@@ -35,7 +35,7 @@
           <button
                   type="button"
                   class="btn shadow my-button"
-                  @click="OnSaveIncome"
+                  @click="OnSave"
           >
             Save <img src="../assets/5.gif"  alt="" v-if="loading">
           </button>
@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import { incomeCollection } from "../firebaseConfig";
+import { budgetCollection } from "../firebaseConfig";
 import layout from "../components/layout";
 import firebase from "firebase";
 export default {
@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       date: 0,
-      income: "",
+      savingLimit: "",
       loading: false,
       error: null,
       errors:[],
@@ -64,12 +64,11 @@ export default {
     };
   },
   methods: {
-    OnSaveIncome: function() {
+    OnSave: function() {
       this.loading = !this.loading;
         firebase.auth().onAuthStateChanged((user) => {
-          incomeCollection.doc().set({
-          date: this.date,
-          income: this.income,
+          budgetCollection.doc().update({
+          savingLimit: this.savingLimit,
           customerId: user.uid 
           }).then(() => {
             this.$store.commit('SET_SHOW_MODAL', 'show');
