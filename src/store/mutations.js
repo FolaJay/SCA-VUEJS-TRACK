@@ -48,4 +48,7 @@ export default {
     TOTAL_BUDGET(state, payload) {
         state.totalBudget = payload
     },
+    SHOW_ERROR(state, value) {
+        state.error =value
+    }
 }

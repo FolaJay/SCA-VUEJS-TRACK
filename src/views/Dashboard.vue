@@ -168,7 +168,5 @@ h2{
   width: 500px;
   height: 500px;
 }
-.table-content{
 
-}
 </style>

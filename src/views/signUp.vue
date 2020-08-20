@@ -3,12 +3,10 @@
     <div class="form-div shadow">
       <h4>SIGNUP</h4>
       <form class>
-        <p v-if="errors.length">
+        <div v-if="this.error">
           <b>Please correct the following error(s):</b>
-          <ul>
-            <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
-          </ul>
-        </p>
+          <p>{{this.error}}</p>
+        </div>
         <div class="input form-group">
           <label>USERNAME</label>
           <input class="form-control" v-model="username" placeholder="Enter your username" />
@@ -62,8 +60,6 @@ export default {
       email: "",
       password: "",
       customerId:"",
-      error: null,
-      errors:[],
       loadingSignUp: false
     };
   },
@@ -75,41 +71,31 @@ export default {
         username : this.username,
         email : this.email,
         password :this.password
-      }).catch(err => {
-          this.error = err.message;
-          if (this.email && this.password) {
-            return true;
-          }
-          if (!this.email && !this.password) {
-            this.errors.push(err.message);
-          }
-          // console.log(err);
-          // console.log(err.message);
-        });
-      //  if (!this.$store.getters.error)  {
-      //   alert("Your account has been created!");
-      // this.$router.push({ name: "/" });
-      // }else{
-      //   this.error = this.$store.getters.error;
-      //   console.log(this.error)
-      // }
+      });
+      if (!this.error)  {
+        this.$store.commit('SET_SHOW_MODAL', 'show');
+      this.$router.push({ name: "/" });
+      }else{
+        return this.clearField();
+      }
       
-    }
-  },
-  computed: {
-    loading() {
-      return this.$store.getters.loading  
-    }
-  },
-  watch: {
-    loading: (val) => val
-  },
-  clearField() {
+    },
+    clearField() {
       this.email = "";
       this.password = "";
       this.username = "";
-  }
-
+      this.loadingSignUp = !this.loadingSignUp;
+      this.error = ""
+    }
+  },
+  computed: {
+    error(){
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error: (val) => val,
+  }, 
 };
 </script>
 <style scoped>

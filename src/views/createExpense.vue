@@ -77,9 +77,12 @@ export default {
     OnSaveExpense: function() {
       this.loading = !this.loading;
       if(this.expenseCategory == "" || this.amount == "" || this.date == "") {
-            console.log("Field cannot be empty");
-            this.errors.push("Field cannot be empty")
-            this.loading = !this.loading;
+        this.errors.push("Field cannot be empty")
+        this.loading = !this.loading;
+      }else if(this.$store.getters.totalIncome == 0) {
+        this.errors.push("You have no Income,You can't create an expense");
+        this.loading = !this.loading;
+        this.clearField();
       } else{
         firebase.auth().onAuthStateChanged((user) => {
           expensesCollection.doc().set({
@@ -97,7 +100,15 @@ export default {
           })
         })
       }
-    }
+    },
+    clearField() {
+      this.date = "";
+      this.amount = "";
+      this.expenseCategory = "";
+  },
+  showBalance() {
+    this.$store.getters.totalIncome - this.$store.getters.Expenses
+  },
   }
 };
 </script>

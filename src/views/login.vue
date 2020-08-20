@@ -3,12 +3,10 @@
     <div class="form-div shadow">
       <h4>LOGIN</h4>
       <form @submit.prevent="logIn">
-        <p v-if="errors.length">
+        <div v-if="this.error">
           <b>Please correct the following error(s):</b>
-          <ul>
-            <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
-          </ul>
-        </p>
+          <p>{{this.error}}</p>
+        </div>
         <div class="input form-group">
           <label>EMAIL</label>
           <input
@@ -47,7 +45,6 @@
                 
 <script>
 require("../firebaseConfig.js");
-import firebase from "firebase";
 
 export default {
   name: "login",
@@ -58,38 +55,43 @@ export default {
         password: ""
       },
       loading: false,
-      error:null,
-      errors: []
     };
   },
   methods: {
-    logIn() {
-      this.$store.commit('SET_SHOW_MODAL', '');
+    async logIn() {
       this.loading = !this.loading;
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(
-          this.loginForm.email,
-          this.loginForm.password,
-        )
-        .then(() => {
-          if (this.$store.getters.isLoggedIn) {
-            this.$store.commit('SET_SHOW_MODAL', 'show');
-            this.$router.push({ name: "dashboard" });
-          } 
-        })
-        .catch(err => {
-          this.error = err.message;
-          if (this.email && this.password) {
-            return true;
-          }
-          if (!this.email && !this.password) {
-            this.errors.push(err.message);
-          }
-
-        });
+      await this.$store.dispatch('logIn', {
+        email : this.loginForm.email,
+        password :this.loginForm.password
+      });
+      if (!this.error)  {
+        this.$store.commit('SET_SHOW_MODAL', 'show');
+        this.$router.push({ name: "dashboard" });
+      }else{
+        return this.clearField();
+      }
+    },
+    clearField() {
+      this.loginForm.email = "";
+      this.loginForm.password = "";
+      this.loading = !this.loading;
+      this.error = ""
     }
-  }
+  },
+  computed: {
+    error: {
+      get: function () {
+        return this.$store.getters.error
+      },
+      set: function(val){
+        this.$store.getters.error = val
+      }
+      
+    }
+  },
+  watch: {
+    error: (val) => val,
+  },
 };
 </script>
 <style scoped>

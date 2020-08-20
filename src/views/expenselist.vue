@@ -49,7 +49,7 @@ export default {
     layout
   },
   methods: {
-    createNewExpense: function() {
+    createNewExpense() {
       this.$router.push("/createExpense");
     },
     getExpenses() {

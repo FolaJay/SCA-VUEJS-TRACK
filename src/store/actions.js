@@ -28,6 +28,23 @@ export default {
       commit("SET_USER", null)
     }
   },
+  logIn: async ({ commit}, payload) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(
+        payload.email,
+        payload.password,
+      )
+      .then(() => {
+        if (this.$store.getters.isLoggedIn) {
+          this.$router.push({ name: "dashboard" });
+        } 
+        commit('SET_LOADING', true);
+        commit('SET_ERROR', false);
+      }).catch(err => {
+        commit('SHOW_ERROR', err);
+      })
+  },
   signUp: async ({ commit }, payload) => {
     firebase
       .auth()
@@ -37,16 +54,14 @@ export default {
         user
           .updateProfile({
             displayName: payload.username
-
           })
           .then(() => {
             console.log(user);
             commit('SET_LOADING', true);
-            commit('SET_ERROR', false);
             router.push({ name: "login" });
           });
       }).catch(err => {
-        console.log(err.message)
+        commit('SHOW_ERROR', err);
       })
 
   },
