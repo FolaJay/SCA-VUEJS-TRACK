@@ -7,8 +7,9 @@
         </div>
         <h2>Recent Expenses</h2>
         <img src="../assets/5.gif" alt v-if="!loading" />
+        <p v-if="!this.expenseLists.length">{{this.noExpense}}</p>
         <div>
-          <table class="table table-hover">
+          <table class="table table-hover" v-if="this.expenseLists.length">
             <thead class="table-header">
               <tr>
                 <th>S/N</th>
@@ -36,7 +37,7 @@ import layout from "../components/layout";
 export default {
   data() {
     return {
-    
+      noExpense: "You have no Expenses",
       totalExpense: 0,
       data: {
         date: 0,
@@ -54,7 +55,7 @@ export default {
     },
     getExpenses() {
       this.$store.dispatch('getExpenses')
-    }
+    },
   },
   mounted() {
     this.getExpenses();

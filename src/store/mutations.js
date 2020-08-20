@@ -50,5 +50,8 @@ export default {
     },
     SHOW_ERROR(state, value) {
         state.error =value
+    },
+    CURRENT_AMOUNT(state, value) {
+        state.expense = value
     }
 }

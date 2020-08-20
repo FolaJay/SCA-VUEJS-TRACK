@@ -44,7 +44,7 @@
           </div>
           <div class="row ">
             <div class="col-6"> 
-              <table class="table table-hover table-borderless">
+              <table class="table table-hover table-borderless" v-if="this.expenseLists.length">
               <thead class="table-primary">
                 <tr>
                   <th>S/N</th>

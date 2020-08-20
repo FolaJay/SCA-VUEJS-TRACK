@@ -10,6 +10,7 @@
             <li v-for="(error,index) in errors" :key ="index">{{ error }}</li>
           </ul>
           </p>
+          <p>Your Available income balance is :{{this.balance}}</p>
           <div class="input form-group">
             <label>Date</label>
             <input
@@ -79,7 +80,7 @@ export default {
       if(this.expenseCategory == "" || this.amount == "" || this.date == "") {
         this.errors.push("Field cannot be empty")
         this.loading = !this.loading;
-      }else if(this.$store.getters.totalIncome == 0) {
+      }else if(this.$store.getters.total == 0 || this.$store.getters.total < this.amount) {
         this.errors.push("You have no Income,You can't create an expense");
         this.loading = !this.loading;
         this.clearField();
@@ -93,6 +94,7 @@ export default {
           }).then(() => {
             this.$store.commit('SET_SHOW_MODAL', 'show');
             this.loading = !this.loading;
+            this.clearField();
           }).catch(err => {
             this.error = err.message;
             this.errors.push(err.message);
@@ -101,14 +103,40 @@ export default {
         })
       }
     },
+    getIncome() {
+      console.log(this.Expenses);
+      this.$store.dispatch('getIncome')
+    }, 
+    getExpenses() {
+      this.$store.dispatch('getExpenses');
+    },
     clearField() {
       this.date = "";
       this.amount = "";
       this.expenseCategory = "";
+    },
+    
   },
-  showBalance() {
-    this.$store.getters.totalIncome - this.$store.getters.Expenses
+  created () {
+    this.getIncome();
+    this.getExpenses();
   },
+  computed:{
+    totalIncome() {
+      return this.$store.getters.totalIncome;
+    },
+    Expenses() {
+      return this.$store.getters.Expenses;
+    },
+    balance(){
+      return this.totalIncome - this.Expenses
+    }
+
+  },
+  watch:{
+    totalIncome: (val) => val,
+    Expenses: (val) => val,
+    balance:(val) => val
   }
 };
 </script>

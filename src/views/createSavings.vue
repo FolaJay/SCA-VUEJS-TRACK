@@ -2,7 +2,7 @@
   <div>
     <layout>
       <div class="wrapper">
-        <h2>Monthly Income</h2>
+        <h2>Set Saving Limit</h2>
         <form>
           <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
@@ -11,12 +11,12 @@
           </ul>
           </p>
           <div class="input form-group">
-            <label>Date</label>
+            <label>Expected Due Date</label>
             <input
               class="form-control"
               type="date"
               v-model="date"
-              placeholder="Date"
+              placeholder="Expected Due Date"
               required
             />
           </div>
@@ -26,8 +26,8 @@
                 <input
                 class="form-control"
                 type="text"
-                v-model="savingLimit"
-                placeholder="Saving Limit"
+                v-model="amount"
+                placeholder="Amount"
                 required
                 />
             </div>
@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import { budgetCollection } from "../firebaseConfig";
+import { savingCollection } from "../firebaseConfig";
 import layout from "../components/layout";
 import firebase from "firebase";
 export default {
@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       date: 0,
-      savingLimit: "",
+      amount: "",
       loading: false,
       error: null,
       errors:[],
@@ -67,17 +67,25 @@ export default {
     OnSave: function() {
       this.loading = !this.loading;
         firebase.auth().onAuthStateChanged((user) => {
-          budgetCollection.doc().update({
-          savingLimit: this.savingLimit,
+          savingCollection.doc().set({
+            date:this.date,
+            amount: this.amount,
           customerId: user.uid 
           }).then(() => {
             this.$store.commit('SET_SHOW_MODAL', 'show');
-            this.loading = !this.loading;
+            
+            this.clearField();
           }).catch(err => {
             this.error = err.message;
             this.errors.push(err.message);
           });
         })
+    },
+    clearField() {
+      this.date = "";
+      this.amount = "";
+      this.expenseCategory = "";
+      this.loading = !this.loading;
     }
   }
 };
