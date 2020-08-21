@@ -13,13 +13,14 @@ const config ={
 }
 firebase.initializeApp(config);
 
+
 // firebase utils
 const db = firebase.firestore();
 const auth = firebase.auth();
 const user = auth.user;
 
-firebase.auth().onAuthStateChanged(user => {
-    store.dispatch("login", user);
+firebase.auth().onAuthStateChanged(async user => {
+    await store.dispatch("login", user);
 });
 
 
@@ -30,8 +31,12 @@ firebase.auth().onAuthStateChanged(user => {
 // db.settings(settings)
 
 // firebase collections
-const expensesCollection = db.collection('Expenses')
-// const postsCollection = db.collection('posts')
+const expensesCollection = db.collection('Expenses');
+const incomeCollection = db.collection('Income');
+const budgetCollection = db.collection('Budget');
+const savingCollection = db.collection('Savings');
+
+
 // const commentsCollection = db.collection('comments')
 // const likesCollection = db.collection('likes')
 
@@ -40,7 +45,9 @@ export {
     auth,
     user,
     expensesCollection,
-    // postsCollection,
+    incomeCollection,
+    budgetCollection,
+    savingCollection,
     // commentsCollection,
     // likesCollection
 }

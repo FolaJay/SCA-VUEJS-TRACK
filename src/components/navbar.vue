@@ -2,25 +2,24 @@
   <div class="navbar-wrapper shadow ">
     <div class="row">
       <div class="col-sm-2">
-        <router-link class="navbar-link" to="#">Logo</router-link>
-      </div>
-      <div class="col-sm-1">
         <div v-if="isBurgerActive">
-          <img @click="togglePanel" src="../assets/menu.png" />
+          <img class="burger" @click="togglePanel" src="../assets/menu.png" />
         </div>
         <div v-else>
-          <img @click="togglePanel" src="../assets/cancel.png" />
+          <img  class="burger" @click="togglePanel" src="../assets/cancel.png" />
         </div>
       </div>
-      <div class="col-sm-9">
+      <div class="col-sm-10">
         <div class="navbar-menu">
-          <router-link class="navbar-link" to="/home">Home</router-link>
           <router-link class="navbar-link" to="/expenselist">Expenses</router-link>
-          <router-link class="navbar-link" to="#">Contact Us</router-link>
-          <router-link class="navbar-link" to="#">About Us</router-link>
+          <router-link class="navbar-link" to="/budget">Budget</router-link>
+          <router-link class="navbar-link" to="/createSavings">Savings</router-link>
 
-          <router-link class="navbar-link" to="/" v-if="!user.loggedIn">Login</router-link>
-          <router-link class="navbar-link" to="/" @click.native="logout" v-else>Logout</router-link>
+          <router-link class="navbar-link" to="/login" v-if="!user.loggedIn">Login</router-link>
+          <router-link class="navbar-link" to="/" @click="logout" v-else>
+          Logout
+          <img src="../assets/5.gif"  alt="" v-if="loading">
+          </router-link>
 
           <router-link class="navbar-link3 shadow" to="/signup" v-if="!user.loggedIn">SignUp</router-link>
         </div>
@@ -29,6 +28,8 @@
   </div>
 </template>
 <script>
+require('../firebaseConfig.js')
+import firebase from 'firebase'
 export default {
   props: {
     isOpen: {
@@ -38,14 +39,22 @@ export default {
   },
   data() {
     return {
-      isBurgerActive: true
+      isBurgerActive: true,
+      loading:false
     };
   },
   components: {},
   methods: {
     logout() {
-      this.$store.commit("SET_LOGGED_OUT");
-      this.$router.push("/");
+      // this.$store.commit("SET_LOGGED_OUT");
+      // this.$router.push("/");
+      this.loading = !this.loading
+      firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+      }).catch(function(error) {
+        // An error happened.
+        console.log(error)
+      });
     },
     togglePanel: function() {
       this.$emit("toggle");
@@ -69,6 +78,9 @@ export default {
 };
 </script>
 <style scoped>
+.row{
+  margin-right: 0;
+}
 .navbar-wrapper{
   background-color: #ffffff;
   margin-bottom: 3px;
@@ -78,13 +90,14 @@ export default {
   padding: 25px 20px;
 }
 .navbar-link {
-  padding: 0 80px 0px 0px;
+  padding: 0 40px 0px 40px;
   color: #000;
-  font-size: 14px;
+  font-size: 16px;
+
   text-decoration: none;
 }
 .navbar-link:hover {
-  color: #808080;
+  color: #28334aff;
 }
 .navbar-link3 {
   background-color: #28334aff;
@@ -102,5 +115,6 @@ export default {
 }
 .burger {
   margin-top: 25px;
+  padding-left:60px;
 }
 </style>

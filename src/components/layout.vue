@@ -1,7 +1,7 @@
 <template>
    <main>
        <sidebar :isPanelOpen="isPanelOpen"/>
-       <div class='app-layout'>
+       <div :class="`${spaceLeft}`">
            <navbar v-on:toggle="toggleSidebar"/>
            <div class='app-layout_slot'>
                <slot/>
@@ -21,18 +21,24 @@ export default {
     },
     data(){
         return {
-            isPanelOpen: false
+            isPanelOpen: false,
+            spaceLeft:""
         }
     },
     methods: {
         toggleSidebar() {
             this.isPanelOpen =  !this.isPanelOpen
+            if(this.isPanelOpen){
+                this.spaceLeft = "space-left"
+            }else{
+                this.spaceLeft = ""
+            }
         }
     }
 }
 </script>
 <style>
-.app-layout  {
-    padding-left: calc(200px - 100%);
+.space-left{
+    padding-left:200px;
 }
 </style>

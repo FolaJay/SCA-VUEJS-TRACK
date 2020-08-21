@@ -2,28 +2,34 @@
   <div>
     <layout>
       <div class="div-wrapper">
-        <div>
-          <button class="newExpense" @click="createNewExpense">New Expense</button>
-        </div>
-        <h2>Recent Expenses</h2>
+          <div class="container">
+              <div class="row">
+                <div class="col-6">
+                <button class="newExpense" @click="createNewBudget">New Budget</button>
+                </div>
+                <div class="col-6">
+                <button class="savingLimit" @click="createSavingLimit">Set Saving Limit</button>
+                </div>
+              </div>
+          </div>
+        <h2>Budget</h2>
         <img src="../assets/5.gif" alt v-if="!loading" />
-        <p v-if="!this.expenseLists.length">{{this.noExpense}}</p>
         <div>
-          <table class="table table-hover" v-if="this.expenseLists.length">
+          <table class="table table-hover">
             <thead class="table-header">
               <tr>
                 <th>S/N</th>
                 <th scope="col">Date</th>
-                <th scope="col">Expense Category</th>
+                <th scope="col">Budget Category</th>
                 <th scope="col">Amount</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(expenseList,index) in expenseLists" :key="index">
+              <tr v-for="(budgetList,index) in budgetLists" :key="index">
                 <th scope="row">{{index}}</th>
-                <td>{{expenseList.date}}</td>
-                <td>{{expenseList.expenseCategory}}</td>
-                <td>{{expenseList.amount}}</td>
+                <td>{{budgetList.date}}</td>
+                <td>{{budgetList.budgetCategory}}</td>
+                <td>{{budgetList.amount}}</td>
               </tr>
             </tbody>
           </table>
@@ -37,11 +43,11 @@ import layout from "../components/layout";
 export default {
   data() {
     return {
-      noExpense: "You have no Expenses",
-      totalExpense: 0,
+    
+      totalBudget: 0,
       data: {
         date: 0,
-        expenseCategory: "",
+        budgetCategory: 0,
         amount: 0,
       }
     };
@@ -50,27 +56,30 @@ export default {
     layout
   },
   methods: {
-    createNewExpense() {
-      this.$router.push("/createExpense");
+    createNewBudget: function() {
+      this.$router.push("/createBudget");
     },
-    getExpenses() {
-      this.$store.dispatch('getExpenses')
+    createSavingLimit: function() {
+      this.$router.push("/createSavings");
     },
+    getBudget() {
+      this.$store.dispatch('getBudget')
+    }
   },
   mounted() {
-    this.getExpenses();
+    this.getBudget();
   },
  computed: {
     loading() {
       return this.$store.getters.loading;
     },
-    expenseLists() {
-      return this.$store.getters.expenselist;
+    budgetLists() {
+      return this.$store.getters.budgetlist;
     }
   },
   watch: {
     loading: (val) => val,
-    expenseLists: (val) => val,
+    budgetLists: (val) => val,
   }
 };
 </script>
@@ -95,6 +104,17 @@ export default {
   border: 2px solid #ffaf7b;
   color: #4d4d4d;
   transition: 0.7s;
+}
+.savingLimit{
+     background-color: rgb(53, 48, 48);
+  border: 1px solid rgb(53, 48, 48);
+  border-radius: 20px;
+  padding: 10px 40px;
+  margin-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  color: #ffffff;
+  text-decoration: none;
 }
 table {
   table-layout: fixed;

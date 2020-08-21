@@ -3,6 +3,10 @@
     <div class="form-div shadow">
       <h4>SIGNUP</h4>
       <form class>
+        <div v-if="this.error">
+          <b>Please correct the following error(s):</b>
+          <p>{{this.error}}</p>
+        </div>
         <div class="input form-group">
           <label>USERNAME</label>
           <input class="form-control" v-model="username" placeholder="Enter your username" />
@@ -36,14 +40,17 @@
           Already have an account
           <router-link to="/">Login</router-link>
         </p>
-        <button type="button" class="btn shadow my-button" @click="signUp">SignUp</button>
+        <button type="button" class="btn shadow my-button" @click="signUp">
+          SignUp
+          <img src="../assets/5.gif" alt v-if="loadingSignUp" />
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
+require("../firebaseConfig.js");
 export default {
   name: "signUp",
 
@@ -52,45 +59,50 @@ export default {
       username: "",
       email: "",
       password: "",
-      error: null
+      customerId:"",
+      loadingSignUp: false
     };
   },
   methods: {
-    signUp: function() {
-      console.log({
-        username: this.username,
-        email: this.email,
-        password: this.password
+    // sanity check function to help check form validity
+    async signUp() {
+      this.loadingSignUp = !this.loadingSignUp
+      await this.$store.dispatch('signUp', {
+        username : this.username,
+        email : this.email,
+        password :this.password
       });
-      // All future sign-in request now include tenant ID.
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(data => {
-          alert("Your account has been created!");
-          data.user
-            .updateProfile({
-              displayName: this.username
-            })
-            .then(() => {
-              this.$router.push({ name: "login" });
-            });
-        })
-        .catch(err => {
-          this.error = err.message;
-        });
+      if (!this.error)  {
+        this.$store.commit('SET_SHOW_MODAL', 'show');
+      this.$router.push({ name: "/" });
+      }else{
+        return this.clearField();
+      }
+      
+    },
+    clearField() {
       this.email = "";
       this.password = "";
       this.username = "";
+      this.loadingSignUp = !this.loadingSignUp;
+      this.error = ""
     }
-  }
+  },
+  computed: {
+    error(){
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error: (val) => val,
+  }, 
 };
 </script>
 <style scoped>
 .body {
   background-image: linear-gradient(to bottom right, #d76d77, #ffaf7b);
   padding-top: 100px;
-  height: 100vh;
+  min-height: 100vh;
 }
 .input {
   padding-bottom: 10px;
@@ -126,7 +138,7 @@ div p {
 .form-div {
   background-color: #ffffff;
   width: 400px;
-  height: 450px;
+  height: 100%;
   padding: 5px 35px;
   margin: 0 auto;
   border-radius: 5px;
