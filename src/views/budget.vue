@@ -14,7 +14,8 @@
           </div>
         <h2>Budget</h2>
         <img src="../assets/5.gif" alt v-if="!loading" />
-        <div>
+        <p v-if="!this.budgetLists.length" class="notify">{{this.noBudget}}</p>
+        <div v-if="this.budgetLists.length">
           <table class="table table-hover">
             <thead class="table-header">
               <tr>
@@ -43,7 +44,7 @@ import layout from "../components/layout";
 export default {
   data() {
     return {
-    
+      noBudget: "You have not set up your Budget",
       totalBudget: 0,
       data: {
         date: 0,
@@ -126,5 +127,8 @@ th, td {
 }
 table-header{
   background:#006699 !important ;
+}
+.notify{
+  padding-top: 20px;
 }
 </style>

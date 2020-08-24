@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       date: 0,
-      amount: "",
+      amount: 0,
       loading: false,
       error: null,
       errors:[],

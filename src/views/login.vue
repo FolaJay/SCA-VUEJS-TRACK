@@ -64,30 +64,20 @@ export default {
         email : this.loginForm.email,
         password :this.loginForm.password
       });
-      if (!this.error)  {
-        this.$store.commit('SET_SHOW_MODAL', 'show');
-        this.$router.push({ name: "dashboard" });
-      }else{
-        return this.clearField();
+      if (this.error){
+        this.clearField();
       }
     },
     clearField() {
       this.loginForm.email = "";
       this.loginForm.password = "";
       this.loading = !this.loading;
-      this.error = ""
     }
   },
   computed: {
-    error: {
-      get: function () {
+    error(){
         return this.$store.getters.error
       },
-      set: function(val){
-        this.$store.getters.error = val
-      }
-      
-    }
   },
   watch: {
     error: (val) => val,

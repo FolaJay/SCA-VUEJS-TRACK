@@ -73,9 +73,6 @@ export default {
         password :this.password
       });
       if (!this.error)  {
-        this.$store.commit('SET_SHOW_MODAL', 'show');
-      this.$router.push({ name: "/" });
-      }else{
         return this.clearField();
       }
       
@@ -85,7 +82,7 @@ export default {
       this.password = "";
       this.username = "";
       this.loadingSignUp = !this.loadingSignUp;
-      this.error = ""
+      
     }
   },
   computed: {
