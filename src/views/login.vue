@@ -27,7 +27,7 @@
             required
           />
         </div>
-        <button type="button" class="btn shadow my-button" @click="logIn">
+        <button type="submit" class="btn shadow my-button" @click="logIn">
           Login
           <img src="../assets/5.gif" alt v-if="loading" />
         </button>

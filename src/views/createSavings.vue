@@ -33,7 +33,7 @@
             </div>
           </div>
           <button
-                  type="button"
+                  type="submit"
                   class="btn shadow my-button"
                   @click="OnSave"
           >

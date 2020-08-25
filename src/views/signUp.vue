@@ -2,7 +2,7 @@
   <div class="body">
     <div class="form-div shadow">
       <h4>SIGNUP</h4>
-      <form class>
+      <form @submit.prevent="signUp">
         <div v-if="this.error">
           <b>Please correct the following error(s):</b>
           <p>{{this.error}}</p>
@@ -40,7 +40,7 @@
           Already have an account
           <router-link to="/">Login</router-link>
         </p>
-        <button type="button" class="btn shadow my-button" @click="signUp">
+        <button type="submit" class="btn shadow my-button" @click="signUp">
           SignUp
           <img src="../assets/5.gif" alt v-if="loadingSignUp" />
         </button>
