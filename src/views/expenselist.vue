@@ -7,7 +7,7 @@
         </div>
         <h2>Recent Expenses</h2>
         <img src="../assets/5.gif" alt v-if="!loading" />
-        <p v-if="!this.expenseLists.length">{{this.noExpense}}</p>
+        <p v-if="!this.expenseLists.length" class="notify">{{this.noExpense}}</p>
         <div>
           <table class="table table-hover" v-if="this.expenseLists.length">
             <thead class="table-header">
@@ -20,7 +20,7 @@
             </thead>
             <tbody>
               <tr v-for="(expenseList,index) in expenseLists" :key="index">
-                <th scope="row">{{index}}</th>
+                <th scope="row">{{++index}}</th>
                 <td>{{expenseList.date}}</td>
                 <td>{{expenseList.expenseCategory}}</td>
                 <td>{{expenseList.amount}}</td>
@@ -106,5 +106,8 @@ th, td {
 }
 table-header{
   background:#006699 !important ;
+}
+.notify{
+  padding-top: 20px;
 }
 </style>

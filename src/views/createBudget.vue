@@ -3,7 +3,7 @@
     <layout>
       <div class="wrapper">
         <h2>Monthly Budget</h2>
-        <form>
+        <form @submit.prevent>
             <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
                 <ul>
@@ -41,7 +41,7 @@
                 />
             </div>
           <button
-                  type="button"
+                  type="submit"
                   class="btn shadow my-button"
                   @click="OnSaveBudget"
           >

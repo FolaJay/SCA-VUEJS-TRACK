@@ -55,7 +55,7 @@
               </thead>
               <tbody class="table-content">
                 <tr v-for="(expenseList,index) in expenseLists" :key="index">
-                  <th scope="row">{{index}}</th>
+                  <th scope="row">{{++index}}</th>
                   <td>{{expenseList.date}}</td>
                   <td>{{expenseList.expenseCategory}}</td>
                   <td>{{expenseList.amount}}</td>

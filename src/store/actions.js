@@ -35,9 +35,9 @@ export default {
         payload.email,
         payload.password,
       )
-      .then(() => {
-        if (this.$store.getters.isLoggedIn) {
-          this.$router.push({ name: "dashboard" });
+      .then((user) => {
+        if (user) {
+         router.push({ name: "dashboard" });
         } 
         commit('SET_LOADING', true);
         commit('SET_ERROR', false);

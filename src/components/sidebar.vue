@@ -9,7 +9,7 @@
             </a>
           </li>
           <li>
-            <a href="/expenselist">Transactions</a>
+            <a href="/expenselist">Expense List</a>
           </li>
           <li>
             <a href="/income">Income</a>
